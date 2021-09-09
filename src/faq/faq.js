@@ -1,17 +1,14 @@
-import react from "react";
+import React from "react";
 import { Segment, Button, Header, Container, Image, Grid } from "semantic-ui-react";
 import AccordionFaq from "./accordion.js"
 import pudge1 from '../resources/падж2222222-(1).gif';
 import pudge2 from '../resources/падж123-(3-падж-падж).gif';
 
-const contStyle = {
-    backgroundImage: 'url(https://i.ytimg.com/vi/HZcTLJ-6UMI/maxresdefault.jpg)',
-    backgroundSize: "cover",
-
-
-}
-
-const faq = () => {
+const FAQ = () => {
+    const contStyle = {
+        backgroundImage: 'url(https://i.ytimg.com/vi/HZcTLJ-6UMI/maxresdefault.jpg)',
+        backgroundSize: "cover"
+    }
     return (
         <div style={contStyle}>
             <Container>
@@ -40,8 +37,7 @@ const faq = () => {
                 </Grid>
             </Segment>
         </div>
-
     )
-
 }
-export default faq;
+
+export default FAQ;

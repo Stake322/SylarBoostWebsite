@@ -22,14 +22,7 @@ mongoose.connect(
 );
 mongoose.set('useFindAndModify', false)
 
-const front_url = 'http://localhost:3000'
-app.use(
-    cors({
-        origin: process.env.FRONT_LOCATION, // <-- location of the react app were connecting to
-        methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-        // credentials: true,
-    })
-);
+app.use(cors({}));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -50,22 +43,3 @@ app.post('/create-request', (req, res, next) => {
 
 const PORT = 3001
 app.listen(PORT, () => console.log(`Server is running on port: ${PORT}`))
-
-
-
-
-const config = {
-    max_mmr : 7500,
-    promocodes : ["MAMAUDOTA", "ABOBA2021", "TERRORBLADE"],
-    price_modificators : {
-        party_boost : 30,
-        stream : 10,
-        spec_heroes : 15,
-        serv_NA : 30,
-        serv_SEA : 40,
-        promocode : 15
-    },
-    coach_rub : 600,
-    coach_usd: 14
-}
-// new ConfigSchema(config).save()

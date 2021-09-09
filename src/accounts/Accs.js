@@ -1,14 +1,10 @@
-import react from "react";
-import { Container, Segment, Image, Grid, Header, Button, Card, Divider, Icon } from 'semantic-ui-react'
+import React from "react";
+import { Container, Segment, Image, Grid, Header, Button, Card, Divider } from 'semantic-ui-react'
 import welcome from "../resources/Welcome.png";
 import imagelink1 from "../accounts/accsScreens/1.png"
 import imagelink2 from "../accounts/accsScreens/2.png"
 import imagelink3 from "../accounts/accsScreens/3.png"
 import imagelink4 from "../accounts/accsScreens/4.png"
-
-
-
-
 
 const segmentStyle = {
     backgroundColor: "#F0DBD1"
@@ -19,7 +15,6 @@ const textCss = {
 }
 const styleDiv = {//space
     backgroundImage: "url(https://99px.ru/sstorage/56/2018/12/11312181905353276.jpg)",
-
 }
 
 const Accs = () => {
@@ -52,10 +47,8 @@ const Accs = () => {
         ))
     }
 
-
     return (
         <div style={styleDiv} >
-
             <Container>
                 <Segment size="massive" raised style={segmentStyle}>
                     <Grid>
@@ -72,7 +65,6 @@ const Accs = () => {
                          4. В течение 5 минут будете иметь доступ к аккаунту.</p>
                         </Grid.Column>
                     </Grid>
-
                 </Segment>
                 <Segment hidden textAlign="center" size="massive" raised style={segmentStyle}>
                     <Header style={textCss} as="h2"> На данный момент аккаунтов нет в наличии </Header>
@@ -80,19 +72,15 @@ const Accs = () => {
                     <Button color="vk" onClick={() => window.open("https://vk.com/topic-187930680_41834234")}>Группа вКонтакте</Button>
                     <Button color="blue" onClick={() => window.open("https://discord.gg/VzyMR9BQUt")}>Discord</Button>
                 </Segment>
-
                 <Segment textAlign="center" size="massive" raised style={segmentStyle}>
                     <Card.Group textAlign="center" itemsPerRow={4}>
                         {renderCards()}
                     </Card.Group>
-
-
                     <Header style={textCss} as="h2"> Также Вы можете связаться с нами, чтобы заказать аккаунт по Вашим предпочтениям</Header>
                     <Button color="vk" onClick={() => window.open("https://vk.com/topic-187930680_41834234")}>Группа вКонтакте</Button>
                     <Button color="blue" onClick={() => window.open("https://discord.gg/VzyMR9BQUt")}>Discord</Button>
                 </Segment>
             </Container>
-
         </div>
     )
 

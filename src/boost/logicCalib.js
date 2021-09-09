@@ -1,4 +1,3 @@
-// const config = require('./config.json');
 class BoostCalc {
     constructor(config) {
         this.config = config;

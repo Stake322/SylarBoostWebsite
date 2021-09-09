@@ -1,6 +1,5 @@
 import React from "react";
 import Typed from 'typed.js';
-import space from "./img/space.jpg";
 import { Container } from 'semantic-ui-react'
 
 class TypedReactDemo extends React.Component {
@@ -27,14 +26,14 @@ class TypedReactDemo extends React.Component {
     },
 
 
-    styleDiv = {//space
-      backgroundImage: "url(https://99px.ru/sstorage/56/2018/12/11312181905353276.jpg)",
-      backgroundSize: "cover",
-      backgroundRepeat: "no-repeat",
-      height: "150px",
-      width: "100%",
-      position: "relative"
-    }
+      styleDiv = {//space
+        backgroundImage: "url(https://99px.ru/sstorage/56/2018/12/11312181905353276.jpg)",
+        backgroundSize: "cover",
+        backgroundRepeat: "no-repeat",
+        height: "150px",
+        width: "100%",
+        position: "relative"
+      }
 
 
     return (
@@ -46,7 +45,7 @@ class TypedReactDemo extends React.Component {
         />
 
       </Container>
-     
+
     );
   }
 }

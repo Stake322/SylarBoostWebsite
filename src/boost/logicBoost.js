@@ -1,9 +1,9 @@
 // const config = require('./this.config.json');
 
 class BoostCalc {
-  constructor(config) {
-      this.config = config;
-  }
+    constructor(config) {
+        this.config = config;
+    }
 
     calculate(currency, from, to, party, stream, server, specHeroes, promocode) {
         //Variables

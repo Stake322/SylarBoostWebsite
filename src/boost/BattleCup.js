@@ -1,49 +1,57 @@
-import React, { useState, useEffect } from "react";
-import { Input, Dropdown, Grid, Button, Container, Segment, Icon, Popup } from 'semantic-ui-react';
+import react, { useState, useEffect } from "react";
+import { Input, Dropdown, Container, Button, Segment, Icon, Grid, Divider, Label } from 'semantic-ui-react';
+import useClipboard from "react-use-clipboard";
+
+
 import straj from "../icons/140px-SeasonalRank2-1.png";
 import geroy from "../icons/140px-SeasonalRank4-1.png";
 import legend from "../icons/140px-SeasonalRank5-1.png";
 import ancient from "../icons/140px-SeasonalRank6-1.png";
 import divine from "../icons/140px-SeasonalRank7-1.png";
 import immortal from "../icons/SeasonalRankTop1.png";
-import immortal2 from "../icons/SeasonalRankTop2.png";
-import unranked from "../icons/SeasonalRank0-0.png";
 import * as api from "../api";
-import useClipboard from "react-use-clipboard";
+import Checkbox from '@material-ui/core/Checkbox';
+
+
+
+const requstType = "Battle Cup";
 
 
 const options = [
-    { key: '1', text: 'БЕЗ РЕЙТИНГА', value: 'без рейтинга', image: unranked },
-    { key: '2', text: '1-2000', value: 'меньше 2000', image: straj },
-    { key: '3', text: '2000-3000', value: '2000-3000', image: geroy },
-    { key: '4', text: '3000-4000', value: '3000-4000', image: legend },
-    { key: '5', text: '4000-5000', value: '4000-5000', image: ancient },
-    { key: '6', text: '5000-5500', value: 'около 5500', image: divine },
-    { key: '7', text: '5500-6000', value: 'около 6000', image: immortal },
-    { key: '8', text: '6000-6500', value: 'около 6500', image: immortal },
-    { key: '9', text: '6500-7000', value: 'около 7000', image: immortal2 },
-    { key: '10', text: '7000-7500', value: 'около 7500', image: immortal2 },
+    { key: '1', text: '3 ТИР', value: '3', image: straj },
+    { key: '2', text: '4 ТИР', value: '4', image: geroy },
+    { key: '3', text: '5 ТИР', value: '5', image: legend },
+    { key: '4', text: '6 ТИР', value: '6', image: ancient },
+    { key: '5', text: '7 ТИР', value: '7', image: divine },
+    { key: '6', text: '8 ТИР', value: '8', image: immortal },
 ]
 
+// const config = require('./config.json');
 
-const priceLP = 90;
-const requstType = "Low Priority"
 
-//TODO: Refactor as in a ./CalcBoost.js
-const Low = (props) => {
+const bcConst = ["", "", "", 300, 400, 500, 650, 750, 1300];
+const keys = ['0', '1', '2', '3', '4', '5', '6', '7', '8'];
+
+
+
+const BattleCup = (props) => {
     const [discount, setDiscount] = useState(10);
-
-    const [currentValue, setCurrentValue] = useState(0);
-    const [count, setCount] = useState(1);
+    const [value, setValue] = useState(0);
     const [result, setResult] = useState(0);
-    const [time, setTime] = useState(0);
-    const [cont1, setCont1] = useState("block");
-    const [cont2, setCont2] = useState("none");
-    const [cont3, setCont3] = useState("none");
+    const [party, setParty] = useState(false);
+    const [stream, setStream] = useState(false);
+    const [isParty, setIsParty] = useState(true);
+    const [smthSelected, setSmthSelected] = useState(false);
     const [mobileGuard, setMobileGuard] = useState("none");
     const [emailGuard, setEmailGuard] = useState("none");
     const [inputResult, setInputResult] = useState("Ничего не выбрали");
     const [isCopied, setCopied] = useClipboard(inputResult);
+    const [infoParty, setInfoParty] = useState("без пати");
+    const [infoStream, setInfoStream] = useState("без стрима");
+    const [cont1, setCont1] = useState("block");
+    const [cont2, setCont2] = useState("none");
+    const [cont3, setCont3] = useState("none");
+
     const [promo, setPromo] = useState("");
     const [promoSegTrue, setPromoSegTrue] = useState("none");
     const [promoSegFalse, setPromoSegFalse] = useState("none");
@@ -64,18 +72,53 @@ const Low = (props) => {
         }
     }
 
+    // const partyCheckbox = () => {
+    //     if (party === true) {
+    //         setInfoParty("БЕЗ пати")
+    //         return setParty(false);
+    //     } else if (party === false) {
+    //         setInfoParty("В пати")
+    //         return setParty(true);
+    //     }
+    // };
+    // const streamCheckbox = () => {
+    //     if (stream === true) {
+    //         setInfoStream("БЕЗ стрима")
+    //         return setStream(false);
+    //     } else if (stream === false) {
+    //         setInfoStream("СО стримом")
+    //         return setStream(true);
+    //     }
+    // };
 
-    const costLP = () => {
-        if (props.config.promocodes.includes(promo)) {
-            return count * priceLP * (1 - discount / 100);
-        } else {
-            return count * priceLP;
-        }
-    };
-    const timeCalc = () => {
-        if (count < 3) return "Меньше 12 часов";
-        else if (count >= 3) return "Около 15 часов";
+    useEffect(() => {
+        setInfoParty(smthSelected && isParty ? "В пати" : "БЕЗ пати")
+        setInfoStream(smthSelected && !isParty ? "СО стримом" : "БЕЗ стрима")
+    }, [isParty, smthSelected])
+
+    const isPartySelected = () => {
+        return smthSelected && isParty;
     }
+    const isStreamSelected = () => {
+        return smthSelected && !isParty;
+    }
+
+
+    const bc = () => {
+
+        if (props.config.promocodes.includes(promo)) {
+            if (isStreamSelected() && value === keys[value]) return (parseFloat(bcConst[value] * 1.25 * (1 - discount / 100)).toFixed(0));
+            if (isPartySelected() && value === keys[value]) return (parseFloat(bcConst[value] * 1.4 * (1 - discount / 100)).toFixed(0));
+            if (value == keys[value]) return bcConst[value] * (1 - discount / 100);
+        } else {
+            if (isStreamSelected() && value === keys[value]) return (parseFloat(bcConst[value] * 1.25).toFixed(0));
+            if (isPartySelected() && value === keys[value]) return (parseFloat(bcConst[value] * 1.4).toFixed(0));
+            if (value === keys[value]) return bcConst[value];
+        }
+    }
+
+
+
 
 
     function throttle(fn, ms) {
@@ -99,15 +142,14 @@ const Low = (props) => {
 
     useEffect(() => {
         setDiscount(+props.config.price_modificators.promocode);
-
         //пати стрим сервер и герои промокод
         throttle(() => {
-            setTime(timeCalc);
-            setResult(costLP);
-            setInputResult(` ММР на аккаунте ${currentValue} | отыграть ЛП игр: ${count}  | за ${result} рублей. Промокод: ${promo}`)
+            setResult(bc);
+            setInputResult(` БАТЛ КАП ТИР ${value} | ${infoParty} | ${infoStream}| за ${result} рублей. Промокод: ${promo} `)
         }, 500);
 
-    }, [currentValue, count, time, promoSegTrue]);
+    }, [value, result, isParty, infoParty, infoStream, smthSelected, promoSegTrue]);
+
 
     const mobile = () => {
         setEmailGuard("none")
@@ -120,15 +162,16 @@ const Low = (props) => {
     }
 
     const Step1 = () => {
-        if (currentValue !== 0) {
+        if (value !== 0) {
             setCont1("none");
             setCont2("block")
             setCont3("none");
-            props.handleStepChange(0)
 
+            props.handleStepChange(0)
         } else {
-            alert("Выберите значение ММР")
+            alert("Выберите ТИР БАТЛ КАПА")
         }
+
 
     }
     const Step2 = () => {
@@ -142,64 +185,79 @@ const Low = (props) => {
         props.handleStepChange(2)
         window.open("https://vk.com/im?media=&sel=-187930680")
         api.sendRequest({
-            currentValue, count, result, promo, requstType
+            value, infoParty, infoStream, promo, requstType,
         })
-
     };
 
+
+
     return (
+
         <div>
             <Container style={{ display: cont1 }}>
-                <Grid textAlign="center">
+                <Grid>
                     <Grid.Row>
-                        <Grid.Column width={6}>
-                            <h3>ТЕКУЩИЙ ММР</h3>
+                        <Grid.Column width={8}>
+                            <h3>ТЕКУЩИЙ ТИР</h3>
                             <Dropdown
                                 placeholder='Выберите текущий рейтинг'
                                 fluid
                                 selection
                                 defaultValue="0"
                                 options={options}
-                                onChange={(e, { value }) => setCurrentValue(value)}
+                                onChange={(e, { value }) => setValue(value)}
                             />
                         </Grid.Column>
-                        <Grid.Column width={4}>
-                            <p>КОЛИЧЕСТВО ИГР: {count}</p>
-                            <input
-                                fontSize="130%"
-                                type='range'
-                                max="5"
-                                min='1'
-                                step="1"
-                                value={count}
-                                onChange={(event) => { setCount(event.target.value) }}
-                            />
-                        </Grid.Column>
-                        <Grid.Column width={6}>
-                            <h3>ВРЕМЯ</h3>
-                            <Input maxLength="4" max="7500" value={time} disabled focus />
-                            <Popup content='Это примерное время'
-                                size="tiny"
-                                trigger={<Button circular icon='question circle' />} />
-
+                        <Grid.Column textAlign="center" width={8}>
+                            <h4>Если необходима услуга, выберите одну:</h4>
+                            <Label
+                                circular
+                                // onClick={partyCheckbox}
+                                size="large"
+                            >
+                                <Checkbox
+                                    checked={smthSelected && isParty}
+                                    onClick={(e) => {
+                                        setSmthSelected(e.target.checked)
+                                        setIsParty(e.target.checked)
+                                    }}
+                                    color="primary"
+                                />
+                                пати
+                            </Label>
+                            <Label
+                                size="large"
+                                circular
+                            // onClick={streamCheckbox}
+                            >
+                                <Checkbox
+                                    checked={smthSelected && !isParty}
+                                    onClick={(e) => {
+                                        setSmthSelected(e.target.checked)
+                                        setIsParty(!e.target.checked)
+                                    }}
+                                    color="primary"
+                                />
+                                стрим
+                            </Label>
                         </Grid.Column>
                     </Grid.Row>
-
+                    <Divider />
                     <Grid.Row>
-                        <Grid.Column width={6}>
+
+
+                        <Grid.Column textAlign="center" width={8}>
                             <Input
+                                fluid
                                 value={result}
-                                action={{
-                                    color: 'teal',
-                                    labelPosition: 'left',
-                                    icon: 'cart',
-                                    content: 'ЦЕНА',
-                                }}
-                                actionPosition='left'
+                                icon='cart'
+                                iconPosition='left'
+                                focus
+                                label="Руб."
+                                labelPosition="right"
                             />
                         </Grid.Column>
-
-                        <Grid.Column width={6}>
+                        <Grid.Column textAlign="center" width={8}>
 
                             <Input
                                 size="small"
@@ -220,17 +278,18 @@ const Low = (props) => {
                             </Segment>
                         </Grid.Column>
                     </Grid.Row>
+
                     <Grid.Row textAlign="center">
                         <Grid.Column columns={16} >
                             <Button onClick={Step1} color='violet'>Подготовить данные</Button>
                         </Grid.Column>
                     </Grid.Row>
+
                 </Grid>
             </Container>
 
 
             <Container style={{ display: cont2 }}>
-
                 <Segment textAlign="center">
                     <p>
                         <h3>Как нужно подготовить данные?</h3>
@@ -238,7 +297,6 @@ const Low = (props) => {
                         </br>
                         2. Выберите какой аутентификатор у вас стоит, чтобы бустер смог войти в аккаунт.
                     </p>
-
                 </Segment>
                 <Segment textAlign="center">
                     <Button color="green" icon="mail" onClick={mobile}>
@@ -250,7 +308,6 @@ const Low = (props) => {
                         Нужен код от почты
                     </Button>
                 </Segment>
-
                 <Segment style={{ display: mobileGuard }} textAlign="center">
                     <p>
                         <h4>
@@ -265,7 +322,6 @@ const Low = (props) => {
                         5.Введите текущий код аутентификатора (или полученный ранее код восстановления).<br></br>
                     </p>
                 </Segment>
-
                 <Segment style={{ display: emailGuard }} textAlign="center">
                     <p>
                         <h4>
@@ -290,18 +346,16 @@ const Low = (props) => {
                     <Input>
                         {inputResult}
                     </Input>
-
                 </Segment>
                 <Button onClick={setCopied}>
                     Нужно скопировать :  {isCopied ? "Копирование прошло успешно! 👍" : "Еще не скопировал! 👎"}
                 </Button>
-
                 <Button type="button" name="submit  " onClick={Step3}  >
                     Написать
                 </Button>
             </Container>
         </div>
     )
-
 }
-export default Low;
+
+export default BattleCup;

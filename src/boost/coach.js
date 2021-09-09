@@ -33,10 +33,8 @@ const options = [
 // const config = require('./config.json');
 const prices = [999,1800,2500]
 
-
-
-
-const CalcBoost = (props) => {
+//TODO: Refactor as in a ./CalcBoost.js
+const Coach = (props) => {
     const [discount, setDiscount] = useState(10);
     const [currentValue, setCurrentValue] = useState(0);
     const [result, setResult] = useState(0);
@@ -275,15 +273,9 @@ const CalcBoost = (props) => {
                 <Button type="button" name="submit  " onClick={NextStep3}  >
                     Написать
                 </Button>
-
-
             </Container>
-
-
-
-
         </div>
     )
 
 }
-export default CalcBoost;
+export default Coach;
