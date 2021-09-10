@@ -35,8 +35,9 @@ const CalcBoost = (props) => {
     const [heros, setHeros] = useState(false);
     const [rank, setRank] = useState(immortal);
 
-    const [mobileGuard, setMobileGuard] = useState("none");
-    const [emailGuard, setEmailGuard] = useState("none");
+    const [mobileGuard, setMobileGuard] = useState(false);
+    const [emailGuard, setEmailGuard] = useState(false);
+
     const [inputResult, setInputResult] = useState("Ничего не выбрали");
     const [isCopied, setCopied] = useClipboard(inputResult);
     const [infoParty, setInfoParty] = useState("без пати");
@@ -44,22 +45,18 @@ const CalcBoost = (props) => {
     const [infoHeros, setInfoHeros] = useState("без дополнительных героев");
 
     const [promo, setPromo] = useState("");
-    const [promoSegTrue, setPromoSegTrue] = useState("none");
-    const [promoSegFalse, setPromoSegFalse] = useState("none");
+    const [promoSegment, setPromoSegment] = useState(0);
 
 
     const checkPromo = () => {
         if (props.config.promocodes.includes(promo)) {
-            setPromoSegTrue("block")
-            setPromoSegFalse("none")
+            setPromoSegment(1);
             return promo
         } else if (props.config.promocodes.includes(promo) === false && (promo !== "")) {
-            setPromoSegTrue("none");
-            setPromoSegFalse("block");
+            setPromoSegment(2);
             return "без промокода"
         } else {
-            setPromoSegTrue("none");
-            setPromoSegFalse("none");
+            setPromoSegment(0);
             return ""
         }
     }
@@ -157,7 +154,7 @@ const CalcBoost = (props) => {
             }, 500);
 
         } else setNewValue("ВВЕДИТЕ РЕЙТИНГ");
-    }, [currentValue, flexValue, newValue, stream, party, heros, rank, inputResult, promoSegTrue, props.config]);
+    }, [currentValue, flexValue, newValue, stream, party, heros, rank, inputResult, promoSegment, props.config]);
 
     const nextStep1 = () => {
         if (cleanResult !== 0) {
@@ -177,17 +174,17 @@ const CalcBoost = (props) => {
         })
     };
     const mobile = () => {
-        setEmailGuard("none")
-        setMobileGuard("block")
+        setEmailGuard(false)
+        setMobileGuard(true)
     }
     const email = () => {
-        setEmailGuard("block")
-        setMobileGuard("none")
+        setEmailGuard(true)
+        setMobileGuard(false)
     }
 
     return (
         <div>
-            {step == 1
+            {step === 1
                 ?
                 <Container textAlign="center">
                     <Grid>
@@ -262,13 +259,20 @@ const CalcBoost = (props) => {
                                 <Button size="tiny" onClick={checkPromo} color="green" >
                                     Проверить
                                 </Button>
-
-                                <Segment style={{ display: promoSegTrue }} size="">
-                                    Промокод {promo} введён успешно <Icon name="check" /> СКИДКА {discount} %
-                                </Segment>
-                                <Segment style={{ display: promoSegFalse }} size="">
-                                    Вы ввели неправильно промокод <Icon name="x" />
-                                </Segment>
+                                {promoSegment === 1
+                                    ?
+                                    <Segment>
+                                        Промокод {promo} введён успешно <Icon name="check" /> СКИДКА {discount} %
+                                    </Segment>
+                                    : null
+                                }
+                                {promoSegment === 2
+                                    ?
+                                    <Segment>
+                                        Вы ввели неправильно промокод <Icon name="x" />
+                                    </Segment>
+                                    : null
+                                }
                             </Grid.Column>
                             <Grid.Column>
                             </Grid.Column>
@@ -284,7 +288,7 @@ const CalcBoost = (props) => {
                 </Container>
                 : null}
 
-            {step == 2
+            {step === 2
                 ?
                 <Container >
                     <Segment textAlign="center">
@@ -305,36 +309,42 @@ const CalcBoost = (props) => {
                             Нужен код от почты
                         </Button>
                     </Segment>
-                    <Segment style={{ display: mobileGuard }} textAlign="center">
-                        <p>
-                            <h4>
-                                Если у Вас стоит мобильный аутентификатор, то нужен постоянно код от мобильного приложения стим. <br></br>
-                                И чтобы бустер не зависил от Вас, то можно сделать запасные коды Steam Guard.
-                            </h4>
-                            Сделать это довольно просто: <br></br>
-                            1.Войдите в свой аккаунт Steam. <br></br>
-                            2.В выпадающем меню под вашим логином в правом верхнем углу страницы выберите «Об аккаунте». <br></br>
-                            3.Выберите «Настройка Steam Guard».<br></br>
-                            4.Выберите «Получить запасные коды».<br></br>
-                            5.Введите текущий код аутентификатора (или полученный ранее код восстановления).<br></br>
-                        </p>
-                    </Segment>
-                    <Segment style={{ display: emailGuard }} textAlign="center">
-                        <p>
-                            <h4>
-                                Если у вас стоит обычная защита steam guard, то есть чтобы войти в аккаунт нужен код от почты, то:
-                            </h4>
-                            По вашему желанию, вы можете выключить steam guard, чтобы бустер мог зайти в аккаунт не ожидая кода от почты. <br></br>
-                            Спасибо
-                        </p>
-                    </Segment>
+                    {mobileGuard
+                        ?
+                        <Segment textAlign="center">
+                            <p>
+                                <h4>
+                                    Если у Вас стоит мобильный аутентификатор, то нужен постоянно код от мобильного приложения стим. <br></br>
+                                    И чтобы бустер не зависил от Вас, то можно сделать запасные коды Steam Guard.
+                                </h4>
+                                Сделать это довольно просто: <br></br>
+                                1. Войдите в свой аккаунт Steam. <br></br>
+                                2. В выпадающем меню под вашим логином в правом верхнем углу страницы выберите «Об аккаунте». <br></br>
+                                3. Выберите «Настройка Steam Guard».<br></br>
+                                4. Выберите «Получить запасные коды».<br></br>
+                                5. Введите текущий код аутентификатора (или полученный ранее код восстановления).<br></br>
+                            </p>
+                        </Segment>
+                        : null}
+                    {emailGuard
+                        ?
+                        <Segment textAlign="center">
+                            <p>
+                                <h4>
+                                    Если у вас стоит обычная защита steam guard, то есть чтобы войти в аккаунт нужен код от почты, то:
+                                </h4>
+                                По вашему желанию, вы можете выключить steam guard, чтобы бустер мог зайти в аккаунт не ожидая кода от почты. <br></br>
+                                Спасибо
+                            </p>
+                        </Segment>
+                        : null}
                     <Segment textAlign="center">
                         <Button onClick={nextStep2} color='violet'>Связаться со мной</Button>
                     </Segment>
                 </Container>
                 : null}
 
-            {step == 3
+            {step === 3
                 ?
                 <Container textAlign="center">
                     <h2>Свяжитесь со мной</h2>

@@ -32,38 +32,35 @@ const requstType = "Low Priority"
 //TODO: Refactor as in a ./CalcBoost.js
 const Low = (props) => {
     const [discount, setDiscount] = useState(10);
+    const [step, setStep] = useState(1)
 
     const [currentValue, setCurrentValue] = useState(0);
     const [count, setCount] = useState(1);
     const [result, setResult] = useState(0);
     const [time, setTime] = useState(0);
-    const [cont1, setCont1] = useState("block");
-    const [cont2, setCont2] = useState("none");
-    const [cont3, setCont3] = useState("none");
-    const [mobileGuard, setMobileGuard] = useState("none");
-    const [emailGuard, setEmailGuard] = useState("none");
+
+
+    const [mobileGuard, setMobileGuard] = useState(false);
+    const [emailGuard, setEmailGuard] = useState(false);
     const [inputResult, setInputResult] = useState("Ничего не выбрали");
     const [isCopied, setCopied] = useClipboard(inputResult);
     const [promo, setPromo] = useState("");
-    const [promoSegTrue, setPromoSegTrue] = useState("none");
-    const [promoSegFalse, setPromoSegFalse] = useState("none");
+    const [promoSegment, setPromoSegment] = useState(0);
+
+
 
     const checkPromo = () => {
         if (props.config.promocodes.includes(promo)) {
-            setPromoSegTrue("block")
-            setPromoSegFalse("none")
+            setPromoSegment(1);
             return promo
         } else if (props.config.promocodes.includes(promo) === false && (promo !== "")) {
-            setPromoSegTrue("none");
-            setPromoSegFalse("block");
+            setPromoSegment(2);
             return "без промокода"
         } else {
-            setPromoSegTrue("none");
-            setPromoSegFalse("none");
+            setPromoSegment(0);
             return ""
         }
     }
-
 
     const costLP = () => {
         if (props.config.promocodes.includes(promo)) {
@@ -107,23 +104,20 @@ const Low = (props) => {
             setInputResult(` ММР на аккаунте ${currentValue} | отыграть ЛП игр: ${count}  | за ${result} рублей. Промокод: ${promo}`)
         }, 500);
 
-    }, [currentValue, count, time, promoSegTrue]);
+    }, [currentValue, count, time,promoSegment]);
 
     const mobile = () => {
-        setEmailGuard("none")
-        setMobileGuard("block")
-
+        setEmailGuard(false)
+        setMobileGuard(true)
     }
     const email = () => {
-        setEmailGuard("block")
-        setMobileGuard("none")
+        setEmailGuard(true)
+        setMobileGuard(false)
     }
 
     const Step1 = () => {
         if (currentValue !== 0) {
-            setCont1("none");
-            setCont2("block")
-            setCont3("none");
+            setStep(2);
             props.handleStepChange(0)
 
         } else {
@@ -132,9 +126,7 @@ const Low = (props) => {
 
     }
     const Step2 = () => {
-        setCont1("none");
-        setCont2("none");
-        setCont3("block");
+        setStep(3);
         props.handleStepChange(1)
 
     }
@@ -149,157 +141,175 @@ const Low = (props) => {
 
     return (
         <div>
-            <Container style={{ display: cont1 }}>
-                <Grid textAlign="center">
-                    <Grid.Row>
-                        <Grid.Column width={6}>
-                            <h3>ТЕКУЩИЙ ММР</h3>
-                            <Dropdown
-                                placeholder='Выберите текущий рейтинг'
-                                fluid
-                                selection
-                                defaultValue="0"
-                                options={options}
-                                onChange={(e, { value }) => setCurrentValue(value)}
-                            />
-                        </Grid.Column>
-                        <Grid.Column width={4}>
-                            <p>КОЛИЧЕСТВО ИГР: {count}</p>
-                            <input
-                                fontSize="130%"
-                                type='range'
-                                max="5"
-                                min='1'
-                                step="1"
-                                value={count}
-                                onChange={(event) => { setCount(event.target.value) }}
-                            />
-                        </Grid.Column>
-                        <Grid.Column width={6}>
-                            <h3>ВРЕМЯ</h3>
-                            <Input maxLength="4" max="7500" value={time} disabled focus />
-                            <Popup content='Это примерное время'
-                                size="tiny"
-                                trigger={<Button circular icon='question circle' />} />
+            {step === 1
+                ?
+                <Container>
+                    <Grid textAlign="center">
+                        <Grid.Row>
+                            <Grid.Column width={6}>
+                                <h3>ТЕКУЩИЙ ММР</h3>
+                                <Dropdown
+                                    placeholder='Выберите текущий рейтинг'
+                                    fluid
+                                    selection
+                                    defaultValue="0"
+                                    options={options}
+                                    onChange={(e, { value }) => setCurrentValue(value)}
+                                />
+                            </Grid.Column>
+                            <Grid.Column width={4}>
+                                <p>КОЛИЧЕСТВО ИГР: {count}</p>
+                                <input
+                                    fontSize="130%"
+                                    type='range'
+                                    max="5"
+                                    min='1'
+                                    step="1"
+                                    value={count}
+                                    onChange={(event) => { setCount(event.target.value) }}
+                                />
+                            </Grid.Column>
+                            <Grid.Column width={6}>
+                                <h3>ВРЕМЯ</h3>
+                                <Input maxLength="4" max="7500" value={time} disabled focus />
+                                <Popup content='Это примерное время'
+                                    size="tiny"
+                                    trigger={<Button circular icon='question circle' />} />
 
-                        </Grid.Column>
-                    </Grid.Row>
+                            </Grid.Column>
+                        </Grid.Row>
 
-                    <Grid.Row>
-                        <Grid.Column width={6}>
-                            <Input
-                                value={result}
-                                action={{
-                                    color: 'teal',
-                                    labelPosition: 'left',
-                                    icon: 'cart',
-                                    content: 'ЦЕНА',
-                                }}
-                                actionPosition='left'
-                            />
-                        </Grid.Column>
+                        <Grid.Row>
+                            <Grid.Column width={6}>
+                                <Input
+                                    value={result}
+                                    action={{
+                                        color: 'teal',
+                                        labelPosition: 'left',
+                                        icon: 'cart',
+                                        content: 'ЦЕНА',
+                                    }}
+                                    actionPosition='left'
+                                />
+                            </Grid.Column>
 
-                        <Grid.Column width={6}>
+                            <Grid.Column width={6}>
 
-                            <Input
-                                size="small"
-                                onChange={(event) => setPromo(event.target.value)}
-                                placeholder="Введите промокод"
-                                value={promo}
-                                onClick={checkPromo}
-                            />
-                            <Button size="tiny" onClick={checkPromo} color="green" >
-                                Проверить
-                            </Button>
+                                <Input
+                                    size="small"
+                                    onChange={(event) => setPromo(event.target.value)}
+                                    placeholder="Введите промокод"
+                                    value={promo}
+                                    onClick={checkPromo}
+                                />
+                                <Button size="tiny" onClick={checkPromo} color="green" >
+                                    Проверить
+                                </Button>
+                                {promoSegment === 1
+                                    ?
+                                    <Segment>
+                                        Промокод {promo} введён успешно <Icon name="check" /> СКИДКА {discount} %
+                                    </Segment>
+                                    : null
+                                }
+                                {promoSegment === 2
+                                    ?
+                                    <Segment>
+                                        Вы ввели неправильно промокод <Icon name="x" />
+                                    </Segment>
+                                    : null
+                                }
+                            </Grid.Column>
+                        </Grid.Row>
+                        <Grid.Row textAlign="center">
+                            <Grid.Column columns={16} >
+                                <Button onClick={Step1} color='violet'>Подготовить данные</Button>
+                            </Grid.Column>
+                        </Grid.Row>
+                    </Grid>
+                </Container>
+                : null}
+            {step === 2
+                ?
+                <Container>
 
-                            <Segment style={{ display: promoSegTrue }} size="">
-                                Промокод {promo} введён успешно <Icon name="check" /> СКИДКА {discount} %
-                            </Segment>
-                            <Segment style={{ display: promoSegFalse }} size="">
-                                Вы ввели неправильно промокод <Icon name="x" />
-                            </Segment>
-                        </Grid.Column>
-                    </Grid.Row>
-                    <Grid.Row textAlign="center">
-                        <Grid.Column columns={16} >
-                            <Button onClick={Step1} color='violet'>Подготовить данные</Button>
-                        </Grid.Column>
-                    </Grid.Row>
-                </Grid>
-            </Container>
+                    <Segment textAlign="center">
+                        <p>
+                            <h3>Как нужно подготовить данные?</h3>
+                            1. Подготовьте логин и пароль, чтобы было всё без ошибок <br>
+                            </br>
+                            2. Выберите какой аутентификатор у вас стоит, чтобы бустер смог войти в аккаунт.
+                        </p>
 
-
-            <Container style={{ display: cont2 }}>
-
-                <Segment textAlign="center">
+                    </Segment>
+                    <Segment textAlign="center">
+                        <Button color="green" icon="mail" onClick={mobile}>
+                            <Icon name="mobile alternate" />
+                            Нужен код от телефона
+                        </Button>
+                        <Button color="yellow" onClick={email}>
+                            <Icon name="mail" />
+                            Нужен код от почты
+                        </Button>
+                    </Segment>
+                    {mobileGuard
+                        ?
+                        <Segment textAlign="center">
+                            <p>
+                                <h4>
+                                    Если у Вас стоит мобильный аутентификатор, то нужен постоянно код от мобильного приложения стим. <br></br>
+                                    И чтобы бустер не зависил от Вас, то можно сделать запасные коды Steam Guard.
+                                </h4>
+                                Сделать это довольно просто: <br></br>
+                                1. Войдите в свой аккаунт Steam. <br></br>
+                                2. В выпадающем меню под вашим логином в правом верхнем углу страницы выберите «Об аккаунте». <br></br>
+                                3. Выберите «Настройка Steam Guard».<br></br>
+                                4. Выберите «Получить запасные коды».<br></br>
+                                5. Введите текущий код аутентификатора (или полученный ранее код восстановления).<br></br>
+                            </p>
+                        </Segment>
+                        : null}
+                    {emailGuard
+                        ?
+                        <Segment textAlign="center">
+                            <p>
+                                <h4>
+                                    Если у вас стоит обычная защита steam guard, то есть чтобы войти в аккаунт нужен код от почты, то:
+                                </h4>
+                                По вашему желанию, вы можете выключить steam guard, чтобы бустер мог зайти в аккаунт не ожидая кода от почты. <br></br>
+                                Спасибо
+                            </p>
+                        </Segment>
+                        : null}
+                    <Segment textAlign="center">
+                        <Button onClick={Step2} color='violet'>Связаться со мной</Button>
+                    </Segment>
+                </Container>
+                : null}
+            {step === 3
+                ?
+                <Container textAlign="center">
+                    <h2>Свяжитесь со мной</h2>
                     <p>
-                        <h3>Как нужно подготовить данные?</h3>
-                        1. Подготовьте логин и пароль, чтобы было всё без ошибок <br>
-                        </br>
-                        2. Выберите какой аутентификатор у вас стоит, чтобы бустер смог войти в аккаунт.
+                        Давайте всё проверим, если информация верна, то нажмите кнопку скопировать и отправьте это сообщение мне в группу Вконтакте! <br></br>
+                        Нажав на кнопку  "Написать"
                     </p>
+                    <Segment>
+                        <h3>Ваш заказ:</h3>
+                        <Input>
+                            {inputResult}
+                        </Input>
 
-                </Segment>
-                <Segment textAlign="center">
-                    <Button color="green" icon="mail" onClick={mobile}>
-                        <Icon name="mobile alternate" />
-                        Нужен код от телефона
+                    </Segment>
+                    <Button onClick={setCopied}>
+                        Нужно скопировать :  {isCopied ? "Копирование прошло успешно! 👍" : "Еще не скопировал! 👎"}
                     </Button>
-                    <Button color="yellow" onClick={email}>
-                        <Icon name="mail" />
-                        Нужен код от почты
+
+                    <Button type="button" name="submit  " onClick={Step3}  >
+                        Написать
                     </Button>
-                </Segment>
-
-                <Segment style={{ display: mobileGuard }} textAlign="center">
-                    <p>
-                        <h4>
-                            Если у Вас стоит мобильный аутентификатор, то нужен постоянно код от мобильного приложения стим. <br></br>
-                            И чтобы бустер не зависил от Вас, то можно сделать запасные коды Steam Guard.
-                        </h4>
-                        Сделать это довольно просто: <br></br>
-                        1.Войдите в свой аккаунт Steam. <br></br>
-                        2.В выпадающем меню под вашим логином в правом верхнем углу страницы выберите «Об аккаунте». <br></br>
-                        3.Выберите «Настройка Steam Guard».<br></br>
-                        4.Выберите «Получить запасные коды».<br></br>
-                        5.Введите текущий код аутентификатора (или полученный ранее код восстановления).<br></br>
-                    </p>
-                </Segment>
-
-                <Segment style={{ display: emailGuard }} textAlign="center">
-                    <p>
-                        <h4>
-                            Если у вас стоит обычная защита steam guard, то есть чтобы войти в аккаунт нужен код от почты, то:
-                        </h4>
-                        По вашему желанию, вы можете выключить steam guard, чтобы бустер мог зайти в аккаунт не ожидая кода от почты. <br></br>
-                        Спасибо
-                    </p>
-                </Segment>
-                <Segment textAlign="center">
-                    <Button onClick={Step2} color='violet'>Связаться со мной</Button>
-                </Segment>
-            </Container>
-            <Container style={{ display: cont3 }} textAlign="center">
-                <h2>Свяжитесь со мной</h2>
-                <p>
-                    Давайте всё проверим, если информация верна, то нажмите кнопку скопировать и отправьте это сообщение мне в группу Вконтакте! <br></br>
-                    Нажав на кнопку  "Написать"
-                </p>
-                <Segment>
-                    <h3>Ваш заказ:</h3>
-                    <Input>
-                        {inputResult}
-                    </Input>
-
-                </Segment>
-                <Button onClick={setCopied}>
-                    Нужно скопировать :  {isCopied ? "Копирование прошло успешно! 👍" : "Еще не скопировал! 👎"}
-                </Button>
-
-                <Button type="button" name="submit  " onClick={Step3}  >
-                    Написать
-                </Button>
-            </Container>
+                </Container>
+                : null}
         </div>
     )
 
