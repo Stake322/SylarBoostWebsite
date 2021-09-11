@@ -33,10 +33,12 @@ const TopBar = () => {
                         </Link>
                         {/* <Box style={buttonStyle}>
                             <Button size="medium" color="orange" icon="pencil alternate" content="Вопросы и предложения" />
-                        </Box>
-                        <Box style={buttonStyle}>
-                            <Button size="medium" color="pink" icon="play" content="Поиграй с Pudge" />
                         </Box> */}
+
+                            <Link to="/pudge">
+                                <Button size="medium" color="pink" icon="play" content="Pudge" />
+                            </Link>
+
                     </Toolbar>
                 </Container>
             </AppBar>

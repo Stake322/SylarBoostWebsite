@@ -13,6 +13,7 @@ import Twitch from "./Twitch.js";
 import Boost from "./boost/Boost.js";
 import Faq from "./faq/FAQ.js";
 import Accs from "./accounts/Accs.js";
+import MainPudgeGame from "./pudgeGame/MainPudgeGame";
 
 function App() {
     return (
@@ -40,7 +41,12 @@ function App() {
                     <Route exact path="/accounts">
                         <Accs />
                     </Route>
+                    <Route exact path="/pudge">
+                    <MainPudgeGame />
+                    </Route>
+                
                 </Switch>
+               
                 <BottomBar />
             </>
         </Router>
