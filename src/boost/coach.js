@@ -128,8 +128,8 @@ const Coach = (props) => {
             else return "Выберите количество часов";
         } else { /// без скидки
             if (count === 1) return prices[count - 1]
-            else if (count === 2) return prices[count - 1]
-            else if (count === 3) return prices[count - 1]
+            else if (count == 2) return prices[count - 1]
+            else if (count == 3) return prices[count - 1]
             else return "Выберите количество часов";
         }
     }

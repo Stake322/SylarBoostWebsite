@@ -3,7 +3,7 @@ import { Menu } from 'semantic-ui-react'
 import { Link } from "react-router-dom";
 
 class TopMenu extends Component {
-    state = { activeItem: 'БУСТ' }
+    state = { activeItem: '213' }
     handleItemClick = (e, { name }) => this.setState({ activeItem: name })
 
     render() {
@@ -13,28 +13,28 @@ class TopMenu extends Component {
                 <Link to="boost">
                     <Menu.Item
                         name='БУСТ'
-                        active={activeItem === 'БУСТ'}
+                        active={activeItem === '1'}
                         onClick={this.handleItemClick}
                     />
                 </Link>
                 <Link to="boost">
                     <Menu.Item
                         name='КАЛИБРОВКА'
-                        active={activeItem === 'messages'}
+                        active={activeItem === '2'}
                         onClick={this.handleItemClick}
                     />
                 </Link>
                 <Link to="boost">
                     <Menu.Item
                         name='ОБУЧЕНИЕ'
-                        active={activeItem === 'friends'}
+                        active={activeItem === '3'}
                         onClick={this.handleItemClick}
                     />
                 </Link>
                 <Link to="accounts">
                     <Menu.Item
                         name='АККАУНТЫ'
-                        active={activeItem === 'logout'}
+                        active={activeItem === '4'}
                         onClick={this.handleItemClick}
                     />
                 </Link>

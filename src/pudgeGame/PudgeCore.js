@@ -5,17 +5,41 @@ import tide from "./resources/img/tide.jpg";
 import crystal from "./resources/img/crystal.png";
 import bounty from "./resources/img/bounty.png";
 import hook from "./resources/img/hook.png";
-
+import * as utils from "./utilits.js";
+// import Moving from "./Moving";
+import { motion, useAnimation } from "framer-motion";
 //Timer PUDGE TIDE CRYSTAL BOUNTY
 
+
+
+
+
 const PudgeCore = () => {
+    //animated
+    const control = useAnimation();
+
     //show/hide image
+    const pudgeX = 50;
+    const pudgeY = 85;
+    const height = 700;
+
+
+
+
+
     const [isShowTide, setIsShowTide] = useState(false);
     const [isShowCrystal, setIsShowCrystal] = useState(false);
     const [isShowBounty, setIsShowBounty] = useState(false);
     const [isShowTimer, setIsShowTimer] = useState(false);
     const [isShowScore, setIsShowScore] = useState(false);
     const [isShowStartGame, setIsShowStartGame] = useState(true);
+    
+    const [textX, setTestX] = useState(0);
+    const [textY, setTestY] = useState(0);
+
+
+    const [moveX, setMoveX] = useState((height * pudgeX / 1000) + 2.5);
+    const [moveY, setMoveY] = useState(pudgeY * height / 100);
 
     const [time, setTime] = useState(101);
     const [open, setOpen] = useState(false);
@@ -26,30 +50,34 @@ const PudgeCore = () => {
     const [positionX, setPositionX] = useState(0);
     const [positionY, setPositionY] = useState(0);
     const [hookX, setHookX] = useState(50);
-    const [hookY, setHookY] = useState(65);
+    const [hookY, setHookY] = useState(80);
 
 
     const randomPositionX = () => {
-        const x = Math.floor((Math.random() * 100));
-        if (x < 75) {
-            return x;
-        } else {
-            return 70;
-        }
+        // const x = Math.floor((Math.random() * 100));
+        // if (x < 75) {
+        //     return x;
+        // } else {
+        //     return 70;
+        // }
+        setTestX(textX+1);
+        return textX;
     };
     const randomPositionY = () => {
-        const y = Math.floor((Math.random() * 100));
-        if (y < 70) {
-            return y;
-        } else {
-            return 70;
-        }
+        // const y = Math.floor((Math.random() * 100));
+        // if (y < 70) {
+        //     return y;
+        // } else {
+        //     return 70;
+        // }
+        setTestY(textY+1);
+        return textY;
     };
 
     const stylePudge = {
         position: "absolute",
-        top: "75%",
-        left: "50%"
+        top: `${pudgeY}%`,
+        left: `${pudgeX}%`
     };
     const styleTide = {
         position: "absolute",
@@ -68,27 +96,33 @@ const PudgeCore = () => {
         left: `${positionX}%`,
     };
     const styleSegmentGameCore = {
-        weight: "700px",
-        height: "700px",
+        height: `${height}px`
         // backgroundColor: "red"
     };
 
 
-    const calcAngle = (x, y) => {
-        // posX pudge - posX tide = A B = sqrt(a^2+c^2)// 
-        let A = x - 50;
-        let Y = y - 75;
-        let B = Math.sqrt(A * A + Y * Y);
-        let sin = A / B;
-        setAngle((Math.asin(sin) / Math.PI) * 180)
 
-    }
+    // const calcXY = (x, y) => {
+    //     // setMoveX(x * height / 1000 + 2.5);
+    //     // setMoveY(y * height / 100);
+    //     let A = x - pudgeX;
+    //     let Y = y - pudgeY;
+    //     let B = Math.sqrt(A * A + Y * Y);
+    //     console.log("B:", B);
+    //     let sin = (Y / B);
+    //     if (x < 50) {
+    //         setAngle(-((Math.asin(sin) / Math.PI) * 180));
+    //     } else setAngle(((Math.asin(sin) / Math.PI) * 180));
+        
+    // }
     const styleHook = {
         position: "absolute",
-        transform: `rotate(${angle}deg)`,
+        transform: `rotate(${angle}grad)`,
         top: `${hookY}%`,
         left: `${hookX}%`,
     };
+
+
 
 
     //fix To many render
@@ -114,7 +148,7 @@ const PudgeCore = () => {
         if (time !== 101) {
             if (time > 0) {
                 const timeLeft = setTimeout(() => {
-                    setTime(time - 3, 33);
+                    // setTime(time - 3, 33);
                 }, 333);
                 return () => clearTimeout(timeLeft);
             }
@@ -137,20 +171,27 @@ const PudgeCore = () => {
         }, 500);
         if (time !== 101) {
             if (time > 0) {
-                let stepX = (positionX - hookX) / 2;
-                let stepY = (positionY - hookY) / 2;
                 const changePositionHook = setTimeout(() => {
-                    setHookX(hookX + stepX);
-                    setHookY(hookY + stepY);
-                }, 200);
+                    control.start({
+                        // x: `${moveX}%`,
+                        // y: `${moveY}%`,
+                        rotate: `${angle}grad`,
+                        // scale: 2,
+                        transition: {
+                            // duration: 2,
+                            
+                        }
+                    })
+                }, 0);
                 return () => clearTimeout(changePositionHook);
             }
         }
 
-    }, [time, positionX, positionY]);
+    }, [time, positionX, positionY, moveY, moveX, angle]);
 
 
     //game
+
     const startGame = () => {
         setScore(0);
         setIsShowStartGame(false);
@@ -160,6 +201,13 @@ const PudgeCore = () => {
         setPositionX(randomPositionX);
         setPositionY(randomPositionY);
         setIsShowTide(true);
+        control.start({
+            x: `${moveX}vw`,
+            y: moveY - 50,
+            transition: {
+                duration: 2,
+            }
+        })
 
     }
 
@@ -169,7 +217,13 @@ const PudgeCore = () => {
         setPositionY(randomPositionY);
         setIsShowCrystal(true);
         setScore(score - 20);
-        calcAngle(positionX, positionY);
+        // calcXY(positionX, positionY)
+        const start = utils.start(pudgeX,pudgeY,positionX,positionY,200,height);
+        setAngle(start.a);
+        setMoveX(positionX);
+        setMoveY(positionY);
+
+
 
     }
     const CrystalClick = () => {
@@ -178,7 +232,9 @@ const PudgeCore = () => {
         setPositionY(randomPositionY);
         setIsShowBounty(true);
         setScore(score + 15);
-        calcAngle(positionX, positionY);
+        // calcXY(positionX, positionY)
+
+
 
 
     }
@@ -188,7 +244,8 @@ const PudgeCore = () => {
         setPositionY(randomPositionY);
         setIsShowTide(true);
         setTime(time + 10);
-        calcAngle(positionX, positionY);
+        // calcXY(positionX, positionY)
+
 
     }
 
@@ -228,9 +285,12 @@ const PudgeCore = () => {
                 {isShowBounty
                     ? <Image circular onClick={BountyClick} size="small" src={bounty} style={styleBounty} />
                     : null}
-                {false
+                {true
                     ?
-                    <Image size="small" style={styleHook} src={hook} />
+                    // <Image size="small" style={styleHook} src={hook} />
+                    <motion.img src={hook}
+                        animate={control}
+                        style={{ width: "200px" }} />
                     : null}
 
             </Segment>
@@ -254,9 +314,6 @@ const PudgeCore = () => {
 
                 </Modal.Actions>
             </Modal>
-
-
-
         </div>
     )
 }
