@@ -12,12 +12,11 @@ export default function Target(props) {
     const [x, setX] = useState(randomPositionX);
     const [y, setY] = useState(props.startPos.y);
     const [opac, setOpac] = useState(1);
-    const [speed, setSpeed] = useState(5);  // if more, then more
 
 
     //calc when i need refresh
-    const steps = (594 + 80) / speed;
-    const maxY = 594 - (Math.round(steps) * speed);
+    const steps = (594 + 80) / props.speed;
+    const maxY = 594 - (Math.round(steps) * props.speed);
 
     const styleBounty = {
         position: "absolute",
@@ -32,22 +31,18 @@ export default function Target(props) {
         setY(594);
     }
 
-    // 595 594-->>> - -5
-
-
-
     useEffect(() => {
         if (y > -80) {
             setOpac(1);
             const timeLeft = setTimeout(() => {
-                setY(y - speed);
+                setY(y - props.speed);
             }, 10);
             return () => clearTimeout(timeLeft);
         }
 
         if (y<-80) {
             // Destroy element
-            props.removeTarget(props.key)
+            props.removeTarget(props.key);
         }
     }, [y]);
 
@@ -58,6 +53,7 @@ export default function Target(props) {
         <div style={{ position: "absolute", left: props.startPos.x, top: y }}>
             <button onClick={(e) => props.triggerClick(props.key)}>
                 <Image
+                    className="img"
                     key={props.key}
                     bordered
                     size="small"

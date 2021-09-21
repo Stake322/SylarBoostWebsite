@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { Segment, Container, Input, Image, Progress, Modal, Button, Label } from 'semantic-ui-react'
+import { Segment, Container, Input, Image, Progress, Modal, Button, Label, Header } from 'semantic-ui-react'
 import pudge from "./resources/img/pudge.png";
 import tide from "./resources/img/tide.jpg";
 import crystal from "./resources/img/crystal.png";
-import bounty from "./resources/img/bounty.png";
+import bounty from "./resources/img/bounty1.png";
 import hook from "./resources/img/hook.png";
 import * as utils from "./utilits.js";
 import { motion, useAnimation } from "framer-motion";
@@ -32,12 +32,13 @@ const PudgeCore = () => {
     const [isShowTimer, setIsShowTimer] = useState(false);
     const [isShowScore, setIsShowScore] = useState(false);
     const [isShowStartGame, setIsShowStartGame] = useState(true);
-
+    const [shot, setShot] = useState("");
+    const [color, setColor] = useState();
 
     const [time, setTime] = useState(101);
     const [open, setOpen] = useState(false);
     const [score, setScore] = useState(0);
-
+    const [speed, setSpeed] = useState(5);
     //Random Position
 
 
@@ -50,21 +51,21 @@ const PudgeCore = () => {
     };
 
     const styleSegmentGameCore = {
-        height: `${height}px`
+        height: `${height}px`,
     };
-
-    const addPoints = (e) => {
-        setScore(score + 15)
-        console.log(score);
+    const styleP = {
+        color: color,
+        position: "absolute",
+        top: "75%",
+        left: "51%",
     }
 
 
 
     const possibleTargetType = [
-        { image: crystal, effect: () => addPoints(), name: "cm" },
-        { image: tide, effect: () => setScore(score - 15), name: 'tide' },
+        { image: crystal, effect: () => setScore(score + 15), name: "cm", },
+        { image: tide, effect: () => setScore(score - 25), name: 'tide', },
         { image: bounty, effect: () => setTime(time + 10), name: 'bounty' },
-
     ]
 
     //fix To many render
@@ -85,12 +86,15 @@ const PudgeCore = () => {
         throttle.clearTimeout = () => clear()
     }
 
-    //timer
+    //timer 
     useEffect(() => {
         if (time !== 101) {
             if (time > 0) {
                 const timeLeft = setTimeout(() => {
-                    // setTime(time - 3, 33);
+                    setTime(time - 3.33);
+                    setSpeed(speed + 0.1);
+                    setColor("white");
+                    setShot("");
                 }, 333);
                 return () => clearTimeout(timeLeft);
             }
@@ -99,8 +103,9 @@ const PudgeCore = () => {
             setIsShowScore(false);
             setIsShowTimer(false);
             setIsShowStartGame(true);
+            setGameStarted(false);
         }
-    }, [time]);
+    }, [time, score, color, shot]);
 
 
     const { array: arrayJSXImages, set, push, remove, filter, update, clear } = useArray([])
@@ -116,11 +121,16 @@ const PudgeCore = () => {
                     const key = `${new Date().getTime()}`
                     const startPos = { x: randomX, y: startPosY }
                     return <Target
+                        speed={speed}
                         key={key}
-                        removeTarget={() => filter((item)=> item.key !== key)}
+                        removeTarget={() => filter((item) => item.key !== key)}
                         image={targetType.image}
                         startPos={startPos}
-                        triggerClick={() => hitDetected(targetType.name)}
+                        triggerClick={() => {
+                            filter((item) => item.key !== key)
+                            targetType.effect();
+                            hitDetected();
+                        }}
                     />
                 })
                 var randomInt = Math.floor(Math.random() * newArray.length)
@@ -132,14 +142,19 @@ const PudgeCore = () => {
         }
     }, spawnInterval * 1000)
 
-    const hitDetected = (value) => {
-        console.log(value);
-
+    const hitDetected = () => {
+        setColor("green");
+        setShot("Попал!");
     }
-    const missedClick = (value) => {
-        //снять очко
-        console.log(value);
-
+    //can use className e.target.className
+    const missedClick = (e) => {
+        if (gameStarted) {
+            if (e.target.nodeName == "DIV") {
+                setScore(score - 1)
+                setColor("red");
+                setShot("Промах!");
+            }
+        }
     }
 
     //game
@@ -150,17 +165,12 @@ const PudgeCore = () => {
         setIsShowScore(true);
         setTime(100);
         setIsShowTimer(true);
-
         setGameStarted(true)
+        setSpeed(5);
+
     }
 
-    const enterKey = (e) => {
-        // setKey(e.code);
-        // console.log(key);
-    }
-    const mouseMainDiv = (e) => {
-        // setDivY(e.clientY)
-    }
+
 
     const gameOverModal = () => {
         return <Modal
@@ -184,7 +194,7 @@ const PudgeCore = () => {
     }
 
     return (
-        <div onMouseMove={(e) => mouseMainDiv(e)}>
+        <div >
 
             <Container style={{ marginTop: "5%" }} textAlign='center'>
 
@@ -202,10 +212,11 @@ const PudgeCore = () => {
                     <Progress percent={time} indicating />
                 </Segment>
                 : null}
-            <Segment color="violet" raised size="big" style={styleSegmentGameCore}>
+            <Segment className="segment" onClick={(e) => missedClick(e)} color="violet" raised size="big" style={styleSegmentGameCore}>
                 {isShowScore
                     ? <Label floating size="huge" circular color="violet">{score}</Label>
                     : null}
+                <Header as='h1' size="big" style={styleP}>{shot}</Header>
                 <Image bordered size="small" src={pudge} style={stylePudge} />
                 {
                     arrayJSXImages.map((item) => {
