@@ -5,11 +5,13 @@ const bodyParser = require('body-parser')
 const RequestSchema = require('./RequestSchema.js')
 require('dotenv').config()
 
+const scoresRoutes = require('./routes/scores')
+
 const ConfigSchema = require('./ConfigSchema.js')
 
 const app = express()
 
-const db_string = 'mongodb+srv://User:aboba322@mycluster.g4hz9.mongodb.net/myFirstDatabase?retryWrites=true&w=majority'
+const db_string = process.env.DB_STRING
 mongoose.connect(
     db_string,
     {
@@ -40,6 +42,14 @@ app.post('/create-request', (req, res, next) => {
     newRequest.save();
     res.send(200)
 })
+
+// получить старые очки (все 5 топ игроков)
+// добавить новый резултат
+// Результаты это объекты { nickname: String, score: Number }
+
+app.get('/scores', scoresRoutes.getScores);
+
+app.post('/new-score', scoresRoutes.newScore)
 
 const PORT = 3001
 app.listen(PORT, () => console.log(`Server is running on port: ${PORT}`))

@@ -20,3 +20,29 @@ export const sendRequest = (data, callback) =>
     }).then((res) => {
         console.log("result from sendRequst", res);
     })
+
+
+export const getScores = (callback) =>
+    axios.get(url + '/scores')
+        .then(res => {
+            console.log('scores:', res);
+            callback(res.data)
+        })
+        .catch(error => {
+            callback(false, error);
+            console.log("erorr getScores", error);
+        });
+
+
+export const sendNewScore = (nickname, score, callback) =>
+    axios({
+        method: "POST",
+        data: { nickname, score },
+        url: url + "/new-score"
+    }).then((res) => {
+        console.log("result from sendNewScore", res);
+        callback(res)
+    }).catch(err => {
+        console.err('err on sendNewScore:', err)
+        callback(false, err)
+    })

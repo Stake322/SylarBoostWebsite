@@ -1,21 +1,21 @@
 import React, { useState, useEffect } from "react";
-import { Segment, Container, Input, Image, Progress, Modal, Button, Label, Header } from 'semantic-ui-react'
+import { Segment, Container, Input, Image, Progress, Modal, Button, Label, Header, GridColumn, Grid } from 'semantic-ui-react'
 import pudge from "./resources/img/pudge.png";
 import tide from "./resources/img/tide.jpg";
 import crystal from "./resources/img/crystal.png";
 import bounty from "./resources/img/bounty1.png";
-import hook from "./resources/img/hook.png";
-import * as utils from "./utilits.js";
-import { motion, useAnimation } from "framer-motion";
-//Timer PUDGE TIDE CRYSTAL BOUNTY
 import useArray from "./resources/hooks/useArray"
 import Target from "./Target";
 import useInterval from "./resources/hooks/useInterval.js";
-
+import * as api from '../api/index'
 
 
 const PudgeCore = () => {
     const [gameStarted, setGameStarted] = useState(false)
+    const [nickName, setNickName] = useState("");
+    const [haveNick, setHaveNick] = useState("");
+
+    const [scores, setScores] = useState([])
 
     //show/hide image
     const pudgeX = 50;
@@ -86,9 +86,13 @@ const PudgeCore = () => {
         throttle.clearTimeout = () => clear()
     }
 
+    useEffect(() => {
+        console.log('Scores changed:', scores);
+    }, [scores])
+
     //timer 
     useEffect(() => {
-        if (time !== 101) {
+        if (gameStarted) {
             if (time > 0) {
                 const timeLeft = setTimeout(() => {
                     setTime(time - 3.33);
@@ -104,6 +108,17 @@ const PudgeCore = () => {
             setIsShowTimer(false);
             setIsShowStartGame(true);
             setGameStarted(false);
+            api.sendNewScore(nickName, score, (result, err) => {
+                if (result) {
+                    console.log('sendNewScore result:', result);
+                    if (result.data) {
+                        const parsedResult = JSON.parse(result.data)
+                        setScores(parsedResult.array)
+                    }
+                } else {
+                    console.log('err: ', err);
+                }
+            })
         }
     }, [time, score, color, shot]);
 
@@ -170,6 +185,37 @@ const PudgeCore = () => {
 
     }
 
+    //localstorage
+    useEffect(() => {
+        api.getScores((result) => {
+            console.log('Will set new scores:', result.array);
+            setScores(result.array)
+        })
+
+        if (nickName !== "" && nickName !== null && nickName !== undefined) {
+            setHaveNick(true);
+            localStorage.setItem('isHaveNick', haveNick);
+            localStorage.setItem('nickName', nickName);
+        }
+       
+        setHaveNick(localStorage.getItem(("isHaveNick")));
+
+        setNickName(localStorage.getItem("nickName") || "")
+    }, [haveNick]);
+
+
+    const saveNick = (e) => {
+        if (e.type === "click")
+            setHaveNick(true);
+        if (e.type === "keypress" && e.code === "Enter")
+            setHaveNick(true);
+    }
+
+    const handleChange = (e)=>{
+        setNickName(e.target.value);
+    }
+
+
 
 
     const gameOverModal = () => {
@@ -193,11 +239,26 @@ const PudgeCore = () => {
         </Modal>
     }
 
+    const renderLeaders = () => {
+        return scores.map((value) => {
+            return <div>|{value.nickname} : {value.score}|</div>
+        })
+    }
+
     return (
         <div >
-
+            <p>Jou `${renderLeaders()}`</p>
+            <p>НИКИЧ:{nickName} ОЧКО: {score}</p>
             <Container style={{ marginTop: "5%" }} textAlign='center'>
-
+                {haveNick
+                    ?
+                    <Header as="h3">Ваш никнейм: {nickName}</Header>
+                    : <div onKeyPress={(e) => saveNick(e)}>
+                        <Header as="h3">Введите никнейм:</Header>
+                        <Input type="text" value={nickName} onChange={handleChange} />
+                        <Button onClick={(e) => saveNick(e)}>Сохранить</Button>
+                    </div>
+                }
                 {isShowStartGame
                     ?
                     <div>
@@ -216,7 +277,7 @@ const PudgeCore = () => {
                 {isShowScore
                     ? <Label floating size="huge" circular color="violet">{score}</Label>
                     : null}
-                <Header as='h1' size="big" style={styleP}>{shot}</Header>
+                <Header as='h1' style={styleP}>{shot}</Header>
                 <Image bordered size="small" src={pudge} style={stylePudge} />
                 {
                     arrayJSXImages.map((item) => {
