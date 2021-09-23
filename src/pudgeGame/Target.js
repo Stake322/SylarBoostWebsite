@@ -18,15 +18,7 @@ export default function Target(props) {
     const steps = (594 + 80) / props.speed;
     const maxY = 594 - (Math.round(steps) * props.speed);
 
-    const styleBounty = {
-        position: "absolute",
-        top: y,
-        left: x,
-        opacity: opac
-    }
-
     useEffect(() => start(), [])
-
     const start = () => {
         setY(594);
     }
@@ -46,9 +38,6 @@ export default function Target(props) {
         }
     }, [y]);
 
-    const clicked = () => {
-        console.log("CLICKED");
-    }
     return (
         <div style={{ position: "absolute", left: props.startPos.x, top: y }}>
             <button onClick={(e) => props.triggerClick(props.key)}>

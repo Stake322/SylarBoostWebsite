@@ -43,6 +43,6 @@ export const sendNewScore = (nickname, score, callback) =>
         console.log("result from sendNewScore", res);
         callback(res)
     }).catch(err => {
-        console.err('err on sendNewScore:', err)
+        console.log('err on sendNewScore:', err)
         callback(false, err)
     })

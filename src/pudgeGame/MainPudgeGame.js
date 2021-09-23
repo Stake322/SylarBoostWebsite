@@ -4,15 +4,9 @@ import { Grid, Image } from 'semantic-ui-react'
 const MainPudgeGame = () => {
     return (
         <div>
-            <button> PUDGE</button>
-            <button> PUDGE</button>
-            <button> PUDGE</button>
-            <button> PUDGE</button>
-            <button> PUDGE</button>
-            <button> PUDGE</button>
-
+    
             <Grid>
-                    <Grid.Column width={13}>
+                    <Grid.Column width={16}>
                         <PudgeCore />
                     </Grid.Column>
             </Grid>

@@ -7,17 +7,21 @@ import bounty from "./resources/img/bounty1.png";
 import useArray from "./resources/hooks/useArray"
 import Target from "./Target";
 import useInterval from "./resources/hooks/useInterval.js";
-import * as api from '../api/index'
+import * as api from '../api/index';
+import PudgeLogo from "./pudgeLogo";
 
 
 const PudgeCore = () => {
     const [gameStarted, setGameStarted] = useState(false)
     const [nickName, setNickName] = useState("");
     const [haveNick, setHaveNick] = useState("");
+    const [nickTrigger, setNickTrigger] = useState(false);
+    const [scroll, setScroll] = useState();
+
 
     const [scores, setScores] = useState([])
 
-    //show/hide image
+    // pudge XY in % and height that size game
     const pudgeX = 50;
     const pudgeY = 85;
     const height = 700;
@@ -39,11 +43,8 @@ const PudgeCore = () => {
     const [open, setOpen] = useState(false);
     const [score, setScore] = useState(0);
     const [speed, setSpeed] = useState(5);
-    //Random Position
-
 
     const startPosY = 595
-
     const stylePudge = {
         position: "absolute",
         top: `${pudgeY}%`,
@@ -102,9 +103,9 @@ const PudgeCore = () => {
                 }, 333);
                 return () => clearTimeout(timeLeft);
             }
-        } if (time <= 2) {
+        } if (time <= 0) {
+            localStorage.setItem('score', score);
             setOpen(true);
-            setIsShowScore(false);
             setIsShowTimer(false);
             setIsShowStartGame(true);
             setGameStarted(false);
@@ -125,7 +126,6 @@ const PudgeCore = () => {
 
     const { array: arrayJSXImages, set, push, remove, filter, update, clear } = useArray([])
     const spawnInterval = 1
-
     useInterval(() => {
         if (gameStarted) {
             const spawnImageJSX = () => {
@@ -173,7 +173,6 @@ const PudgeCore = () => {
     }
 
     //game
-
     const startGame = () => {
         setScore(0);
         setIsShowStartGame(false);
@@ -192,31 +191,35 @@ const PudgeCore = () => {
             setScores(result.array)
         })
 
-        if (nickName !== "" && nickName !== null && nickName !== undefined) {
+        if (nickName !== "" && nickName !== null && nickName !== undefined && !nickTrigger) {
             setHaveNick(true);
             localStorage.setItem('isHaveNick', haveNick);
             localStorage.setItem('nickName', nickName);
         }
-       
-        setHaveNick(localStorage.getItem(("isHaveNick")));
+        if (!nickTrigger) {
+            setHaveNick(localStorage.getItem(("isHaveNick")));
+            setNickName(localStorage.getItem("nickName") || "")
+        }
 
-        setNickName(localStorage.getItem("nickName") || "")
-    }, [haveNick]);
 
-
+    }, [haveNick, score, nickTrigger]);
     const saveNick = (e) => {
         if (e.type === "click")
             setHaveNick(true);
+        localStorage.setItem('isHaveNick', haveNick);
+        localStorage.setItem('nickName', nickName);
         if (e.type === "keypress" && e.code === "Enter")
             setHaveNick(true);
+        localStorage.setItem('isHaveNick', haveNick);
+        localStorage.setItem('nickName', nickName);
     }
 
-    const handleChange = (e)=>{
-        setNickName(e.target.value);
+    const changeNick = () => {
+        setNickTrigger(true);
+        setHaveNick(false);
+        localStorage.removeItem("isHaveNick");
+        localStorage.removeItem("nickName");
     }
-
-
-
 
     const gameOverModal = () => {
         return <Modal
@@ -240,54 +243,88 @@ const PudgeCore = () => {
     }
 
     const renderLeaders = () => {
-        return scores.map((value) => {
-            return <div>|{value.nickname} : {value.score}|</div>
+        return scores.map((value, index) => {
+            return <div>{index + 1}. {value.nickname} : {value.score} очков</div>
         })
     }
-
+    const onScroll = e => {
+        setScroll(e.target.scroll);
+        console.log(window.scrollY);
+    }
     return (
         <div >
-            <p>Jou `${renderLeaders()}`</p>
-            <p>НИКИЧ:{nickName} ОЧКО: {score}</p>
-            <Container style={{ marginTop: "5%" }} textAlign='center'>
-                {haveNick
-                    ?
-                    <Header as="h3">Ваш никнейм: {nickName}</Header>
-                    : <div onKeyPress={(e) => saveNick(e)}>
-                        <Header as="h3">Введите никнейм:</Header>
-                        <Input type="text" value={nickName} onChange={handleChange} />
-                        <Button onClick={(e) => saveNick(e)}>Сохранить</Button>
-                    </div>
-                }
-                {isShowStartGame
-                    ?
-                    <div>
-                        <Button onClick={startGame}> StartGame</Button>
-                    </div>
-                    : null}
-
-            </Container>
-            {isShowTimer
-                ?
-                <Segment>
-                    <Progress percent={time} indicating />
-                </Segment>
-                : null}
-            <Segment className="segment" onClick={(e) => missedClick(e)} color="violet" raised size="big" style={styleSegmentGameCore}>
-                {isShowScore
-                    ? <Label floating size="huge" circular color="violet">{score}</Label>
-                    : null}
-                <Header as='h1' style={styleP}>{shot}</Header>
-                <Image bordered size="small" src={pudge} style={stylePudge} />
-                {
-                    arrayJSXImages.map((item) => {
-                        // console.log('Trying to rencder item: ', item)
-                        return item
-                    })
-                }
-            </Segment>
-
-
+            <Grid>
+                <GridColumn width={3}>
+                    <Segment style={{ height: "250px" }} size="huge">
+                        Реклама
+                    </Segment>
+                    <Segment style={{ height: "250px" }} size="huge">
+                        Реклама
+                    </Segment>
+                    <Segment style={{ height: "250px" }} size="huge">
+                        Реклама
+                    </Segment>
+                </GridColumn>
+                <GridColumn width={10}>
+               
+                    <Container style={{ marginTop: "5%" }} textAlign='center'>
+                    <Segment compact>
+                    <Header color="purple"  as="h3">Пьюдж Варс</Header>
+                    <PudgeLogo />
+                    </Segment>                
+                        {haveNick
+                            ?
+                            <div>
+                                <Header as="h3">Ваш никнейм: {nickName}</Header>
+                                <Button compact circular style={{ marginBottom: "1%" }} color="purple" onClick={changeNick}>Изменить никнейм</Button>
+                            </div>
+                            : <div onKeyPress={(e) => saveNick(e)}>
+                                <Header as="h3">Введите никнейм:</Header>
+                                <Input type="text" value={nickName} onChange={e=>setNickName(e.target.value)} />
+                                <Button onClick={(e) => saveNick(e)}>Сохранить</Button>
+                            </div>
+                        }
+                        {isShowStartGame
+                            ?
+                            <div>
+                                <Button positive onClick={startGame}>Начать игру</Button>
+                            </div>
+                            : null}
+                    </Container>
+                    {isShowTimer
+                        ?
+                        <Segment>
+                            <Progress percent={time} indicating />
+                        </Segment>
+                        : null}
+                    <Segment className="segment" onClick={(e) => missedClick(e)} color="violet" raised size="big" style={styleSegmentGameCore}>
+                        {isShowScore
+                            ? <Label floating size="huge" circular color="violet">{score}</Label>
+                            : null}
+                        <Header as='h1' style={styleP}>{shot}</Header>
+                        <Image bordered size="small" src={pudge} style={stylePudge} />
+                        {
+                            arrayJSXImages.map((item) => item)
+                        }
+                    </Segment>
+                </GridColumn>
+                <GridColumn width={3}>
+                    <Segment style={{ height: "250px" }} size="huge">
+                        Реклама
+                    </Segment>
+                    <Segment color="violet" raised size="big">
+                        <Header textAlign="center">ТОП 5 МЕСЯЦА:</Header>
+                        <p>{renderLeaders()}</p>
+                    </Segment>
+                    <Segment color="violet" raised size="big">
+                        <Header textAlign="center">Последняя игра:</Header>
+                        <p>{nickName} : {score === 0 ? localStorage.getItem("score") : score}</p>
+                    </Segment>
+                    <Segment style={{ height: "250px" }} size="huge">
+                        Реклама
+                    </Segment>
+                </GridColumn>
+            </Grid>
             {gameOverModal()}
         </div>
     )
