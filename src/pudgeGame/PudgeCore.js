@@ -95,12 +95,12 @@ const PudgeCore = () => {
     useEffect(() => {
         if (gameStarted) {
             if (time > 0) {
-                const timeLeft = setTimeout(() => {
-                    setTime(time - 3.33);
-                    setSpeed(speed + 0.1);
+                const timeLeft = setInterval(() => {
+                    setTime(time - 1);
+                    setSpeed(speed + 0.04);
                     setColor("white");
                     setShot("");
-                }, 333);
+                }, 100);
                 return () => clearTimeout(timeLeft);
             }
         } if (time <= 0) {
@@ -124,7 +124,7 @@ const PudgeCore = () => {
     }, [time, score, color, shot]);
 
 
-    const { array: arrayJSXImages, set, push, remove, filter, update, clear } = useArray([])
+    const { array: arrayJSXImages, set, push, remove, filter, update, clear } = useArray([]);
     const spawnInterval = 1
     useInterval(() => {
         if (gameStarted) {
@@ -141,11 +141,12 @@ const PudgeCore = () => {
                         removeTarget={() => filter((item) => item.key !== key)}
                         image={targetType.image}
                         startPos={startPos}
-                        triggerClick={() => {
+                        triggerClick={(x,y) => {
                             filter((item) => item.key !== key)
                             targetType.effect();
-                            hitDetected();
+                            hitDetected()
                         }}
+
                     />
                 })
                 var randomInt = Math.floor(Math.random() * newArray.length)
@@ -155,9 +156,10 @@ const PudgeCore = () => {
             push(imageToSpawn)
 
         }
-    }, spawnInterval * 1000)
+    }, spawnInterval * 1000);
 
     const hitDetected = () => {
+
         setColor("green");
         setShot("Попал!");
     }
@@ -237,7 +239,6 @@ const PudgeCore = () => {
             </Modal.Content>
             <Modal.Actions>
                 <Button color="violet" onClick={() => setOpen(false)}>Закрыть</Button>
-
             </Modal.Actions>
         </Modal>
     }
@@ -266,12 +267,12 @@ const PudgeCore = () => {
                     </Segment>
                 </GridColumn>
                 <GridColumn width={10}>
-               
+
                     <Container style={{ marginTop: "5%" }} textAlign='center'>
-                    <Segment compact>
-                    <Header color="purple"  as="h3">Пьюдж Варс</Header>
-                    <PudgeLogo />
-                    </Segment>                
+                        <Segment compact>
+                            <Header color="purple" as="h3">Пьюдж Варс</Header>
+                            <PudgeLogo />
+                        </Segment>
                         {haveNick
                             ?
                             <div>
@@ -280,7 +281,7 @@ const PudgeCore = () => {
                             </div>
                             : <div onKeyPress={(e) => saveNick(e)}>
                                 <Header as="h3">Введите никнейм:</Header>
-                                <Input type="text" value={nickName} onChange={e=>setNickName(e.target.value)} />
+                                <Input type="text" value={nickName} onChange={e => setNickName(e.target.value)} />
                                 <Button onClick={(e) => saveNick(e)}>Сохранить</Button>
                             </div>
                         }

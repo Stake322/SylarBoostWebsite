@@ -31,7 +31,6 @@ export default function Target(props) {
             }, 10);
             return () => clearTimeout(timeLeft);
         }
-
         if (y<-80) {
             // Destroy element
             props.removeTarget(props.key);
@@ -39,8 +38,8 @@ export default function Target(props) {
     }, [y]);
 
     return (
-        <div style={{ position: "absolute", left: props.startPos.x, top: y }}>
-            <button onClick={(e) => props.triggerClick(props.key)}>
+        <div  onClick={(e) => props.triggerClick()} style={{ position: "absolute", left: props.startPos.x, top: y }}>
+            <button>
                 <Image
                     className="img"
                     key={props.key}
