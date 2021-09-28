@@ -76,3 +76,6 @@ typings/
 .fusebox/
 # Settings
 .vscode/
+
+#build
+build/
