@@ -1,4 +1,4 @@
-class BoostCalc {
+export default class BoostCalc {
     constructor(config) {
         this.config = config;
     }
@@ -63,4 +63,3 @@ class BoostCalc {
 
 }
 
-export default BoostCalc;
