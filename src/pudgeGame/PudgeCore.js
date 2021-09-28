@@ -141,7 +141,7 @@ const PudgeCore = () => {
                         removeTarget={() => filter((item) => item.key !== key)}
                         image={targetType.image}
                         startPos={startPos}
-                        triggerClick={(x,y) => {
+                        triggerClick={(x, y) => {
                             filter((item) => item.key !== key)
                             targetType.effect();
                             hitDetected()
@@ -244,9 +244,11 @@ const PudgeCore = () => {
     }
 
     const renderLeaders = () => {
-        return scores.map((value, index) => {
-            return <div>{index + 1}. {value.nickname} : {value.score} очков</div>
-        })
+        return (scores !== undefined)
+            ? scores.map((value, index) => {
+                return <div>{index + 1}. {value.nickname} : {value.score} очков</div>
+            })
+            : <div></div>
     }
     const onScroll = e => {
         setScroll(e.target.scroll);
