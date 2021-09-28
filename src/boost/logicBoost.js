@@ -107,4 +107,4 @@ class BoostCalc {
 
 }
 
-module.exports = BoostCalc;
+export default BoostCalc;
