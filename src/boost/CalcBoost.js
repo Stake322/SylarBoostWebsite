@@ -137,7 +137,7 @@ const CalcBoost = (props) => {
     }
 
     useEffect(() => {
-        setBoostCalc(new BoostCalc(props.config));
+        setBoostCalc(new BoostCalc.default(props.config));
     }, [props.config])
 
     useEffect(() => {

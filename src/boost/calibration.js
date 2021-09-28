@@ -144,7 +144,7 @@ const CalibrationCalc = (props) => {
 
 
     useEffect(() => {
-        setCalibCalc(new CalibCalc(props.config));
+        setCalibCalc(new CalibCalc.default(props.config));
 
     }, [props.config])
 
