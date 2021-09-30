@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import Tabs from "./Tabs.js";
 import TypedReactDemo from "./FlexText.js";
 import CardReviews from "./CardReviews.js";
@@ -24,13 +24,19 @@ const MainPage = () => {
             backgroundRepeat: "no-repeat",
         };
 
+
+    const [nick, setNick] = useState(localStorage.getItem("nickName") || "красавчик");
+
+
+
+
     return (
         <div>
             <TypedReactDemo
                 strings={[
                     '-Это что Ana?  - Нет, это <strong>Mamau` dota<strong>',
                     'Я В ДЖАКУЗИ Я В ДЖАКУЗИ ЭТО ФАКТ',
-                    'Воспользуйся моими услугами, <strong> красавчик<strong>'
+                    `Воспользуйся моими услугами, <strong> ${nick}<strong>`
                 ]}
             />
             <div style={main} >
