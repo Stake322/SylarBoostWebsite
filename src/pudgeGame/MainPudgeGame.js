@@ -3,6 +3,7 @@ import PudgeCore from "./PudgeCore";
 import { Grid, Image, Segment, Header, Button, Input, Container } from 'semantic-ui-react'
 import * as api from '../api/index';
 import Tutorial from "./Tutorial";
+import PudgeLogo from "./PudgeLogo";
 
 
 const MainPudgeGame = () => {
@@ -79,6 +80,9 @@ const MainPudgeGame = () => {
         <div>
             <Grid>
                 <Grid.Column width={3}>
+                <Segment size="big">             
+                        <PudgeLogo style={{ left: '50%', top: "30%", position: "absolute" }} />
+                    </Segment>
                     <Segment color="violet" raised size="big" style={{ marginTop: "3%" }} textAlign="center">
                         {haveNick
                             ?
@@ -94,12 +98,12 @@ const MainPudgeGame = () => {
                         }
                     </Segment>
                     <Segment size="big">
-                        <Tutorial/>
+                        <Tutorial />
                     </Segment>
+             
                 </Grid.Column>
 
                 <Grid.Column width={10}>
-
                     <PudgeCore nickName={nickName} score={score} setScore={setScore} sendScore={sendScore} />
                 </Grid.Column>
 

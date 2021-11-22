@@ -28,21 +28,21 @@ export default class MenuExampleText extends Component {
         <Link to="boost">
           <Menu.Item
             name='КАЛИБРОВКА'
-            active={activeItem === 'messages'}
+            active={activeItem === 'КАЛИБРОВКА'}
             onClick={this.handleItemClick}
           />
         </Link>
         <Link to="boost">
           <Menu.Item
             name='ОБУЧЕНИЕ'
-            active={activeItem === 'friends'}
+            active={activeItem === 'ОБУЧЕНИЕ'}
             onClick={this.handleItemClick}
           />
         </Link>
         <Link to="accounts">
             <Menu.Item
               name='АККАУНТЫ'
-              active={activeItem === 'logout'}
+              active={activeItem === 'АККАУНТЫ'}
               onClick={this.handleItemClick}
             />
         </Link>

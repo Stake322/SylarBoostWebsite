@@ -7,7 +7,8 @@ import pudge2 from '../resources/падж123-(3-падж-падж).gif';
 const FAQ = () => {
     const contStyle = {
         backgroundImage: 'url(https://i.ytimg.com/vi/HZcTLJ-6UMI/maxresdefault.jpg)',
-        backgroundSize: "cover"
+        backgroundSize: "cover",
+        height:"720px"
     }
     return (
         <div style={contStyle}>
@@ -19,7 +20,7 @@ const FAQ = () => {
                     <Button color="blue" onClick={() => window.open("https://discord.gg/VzyMR9BQUt")}>Discord</Button>
                 </Segment>
             </Container>
-            <Segment raised color="violet" style={{ marginLeft: "auto", marginRight: "auto" }} compact textAlign="center">
+            {/* <Segment raised color="violet" style={{ marginLeft: "auto", marginRight: "auto" }} compact textAlign="center">
                 <Header as="h2">ЛУЧШИЕ БУСТЕРЫ - ПУДЖИ</Header>
                 <Grid columns={3} >
                     <Grid.Column>
@@ -35,7 +36,7 @@ const FAQ = () => {
                         <Image src={pudge1} size="large"></Image>
                     </Grid.Column>
                 </Grid>
-            </Segment>
+            </Segment> */}
         </div>
     )
 }

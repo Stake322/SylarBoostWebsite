@@ -22,12 +22,12 @@ const TopBar = () => {
                         <TopMenu />
                         <Box floated="left" style={buttonStyle}>
                             <Link to="/youtube">
-                                <Button size="medium" color="red" icon="youtube" content="Youtube" />
+                                <Button  floated="right" size="medium" color="red" icon="youtube" content="Youtube" />
                             </Link>
                         </Box>
-                        <Link to="/twitch">
+                        {/* <Link to="/twitch">
                             <Button size="medium" color="violet" icon="twitch" content="Twitch" />
-                        </Link>
+                        </Link> */}
                         <Link to="/faq">
                             <Button floated="right" size="medium" color="purple" icon="question" content="FAQ" />
                         </Link>
@@ -36,7 +36,7 @@ const TopBar = () => {
                         </Box> */}
 
                             <Link to="/pudge">
-                                <Button size="medium" color="pink" icon="play" content="Pudge" />
+                                <Button   floated="right" size="medium" color="pink" icon="play" content="Pudge" />
                             </Link>
 
                     </Toolbar>

@@ -13,7 +13,7 @@ const MainPage = () => {
         backgroundRepeat: "no-repeat",
         width: "100%"
     },
-        tabsStyle = { background: "rgba(195, 0, 255, 0.342)" },
+        tabsStyle = { background: "rgba(195, 0, 255, 0.342)", height:"634px" },
         grid = {
             backgroundImage: 'url(https://wallpaperaccess.com/full/3705495.jpg)',
             backgroundSize: "1600px 900px",

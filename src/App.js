@@ -8,7 +8,7 @@ import {
     Switch,
     Route
 } from "react-router-dom";
-import Youtube from "./Youtube.js";
+import Youtube from "./youtube/Youtube"
 import Twitch from "./Twitch.js";
 import Boost from "./boost/Boost.js";
 import Faq from "./faq/FAQ.js";
