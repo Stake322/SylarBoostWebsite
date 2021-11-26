@@ -1,0 +1,13 @@
+GET http://localhost:3001/scores
+
+###
+
+POST http://localhost:3001/new-score
+content-type: application/json
+
+{
+    "nickname": "myaki",
+    "score": 1
+}
+
+###
