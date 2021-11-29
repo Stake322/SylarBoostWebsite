@@ -36,10 +36,12 @@ const CardReviews = () => {
         ))
     }
 
+    
+
     return (
         <Container>
             <Segment style={segmentStyle} >
-                <Header textAlign="center" as="h2">Последние отзывы</Header>
+                <Header textAlign="center" as="h2">Последние отзывы:</Header>
                 <Card.Group textAlign="center" itemsPerRow={5}>
                     {renderCards()}
                 </Card.Group>
@@ -48,4 +50,5 @@ const CardReviews = () => {
     )
 }
 
-export default CardReviews
+export default CardReviews;
+

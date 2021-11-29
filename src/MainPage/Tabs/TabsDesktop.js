@@ -1,11 +1,11 @@
 import React from 'react'
 import { Tab, Image, Button, Icon, Container, Grid, Segment } from 'semantic-ui-react';
-import immortal from './img/Immortal.png';
-import immortal2 from './img/bc.jpg';
-import immortal3 from './img/accounts.jpg';
-import immortal4 from './img/dotaplus.png';
-import iconImmortal from "./icons/SeasonalRankTop2.png";
-import iconImmortal2 from "./icons/SeasonalRankTop1.png";
+import immortal from '../../img/Immortal.png';
+import immortal2 from '../../img/bc.jpg';
+import immortal3 from '../../img/accounts.jpg';
+import immortal4 from '../../img/dotaplus.png';
+import iconImmortal from "../../icons/SeasonalRankTop2.png";
+import iconImmortal2 from "../../icons/SeasonalRankTop1.png";
 import { Link } from "react-router-dom";
 
 const TabExamplePointing = () => {

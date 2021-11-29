@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import Slider from "react-slick";
 import { Container, Image, Label } from "semantic-ui-react";
-import someIgame1 from "./img/1.jpg";
-import someIgame2 from "./img/2.jpg";
-import someIgame3 from "./img/3.jpg";
-import someIgame4 from "./img/4.png";
+import someIgame1 from "../../img/1.jpg";
+import someIgame2 from "../../img/2.jpg";
+import someIgame3 from "../../img/3.jpg";
+import someIgame4 from "../../img/4.png";
 
 function SampleNextArrow(props) {
     const { className, style, onClick } = props;
@@ -29,12 +29,14 @@ function SamplePrevArrow(props) {
 }
 
 
-class Fade extends Component {
+class SliderMobile extends Component {
     render() {
         const h2 = {
             color: "#F0DBD1",
-            textAlign: "center"
+            textAlign: "center",
+            fontSize: "95%"
         }
+
         const settings = {
             dots: true,
             fade: true,
@@ -53,19 +55,19 @@ class Fade extends Component {
                 <Slider {...settings}>
                     <div>
                         <Image src={someIgame1} />
-                        <Label size="huge" color="black" attached="bottom">Буст: 5000-6300</Label>
+                        <Label ize="large" color="black" attached="bottom">Буст: 5000-6300</Label>
                     </div>
                     <div>
                         <Image src={someIgame2} />
-                        <Label size="huge" color="black" attached="bottom">Буст: 5500-7000</Label>
+                        <Label size="large" color="black" attached="bottom">Буст: 5500-7000</Label>
                     </div>
                     <div>
                         <Image src={someIgame3} />
-                        <Label size="huge" color="black" attached="bottom">Буст: 6000-6500</Label>
+                        <Label size="large" color="black" attached="bottom">Буст: 6000-6500</Label>
                     </div>
                     <div>
                         <Image src={someIgame4} />
-                        <Label size="huge" color="black" attached="bottom">Калибровка: 10-0</Label>
+                        <Label size="large" color="black" attached="bottom">Калибровка: 10-0</Label>
                     </div>
                 </Slider>
             </Container>
@@ -73,4 +75,4 @@ class Fade extends Component {
     }
 }
 
-export default Fade
+export default SliderMobile;

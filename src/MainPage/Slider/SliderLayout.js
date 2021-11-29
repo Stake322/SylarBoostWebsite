@@ -1,8 +1,9 @@
 import React from 'react'
 import { createMedia } from '@artsy/fresnel'
 import PropTypes from 'prop-types'
-import TabExamplePointing from './Tabs' 
-import TabMobile from './TabMobile'
+
+import SliderDesktop from "./SliderDesktop";
+import SliderMobile from './SliderMobile';
 
 const { MediaContextProvider, Media } = createMedia({
     breakpoints: {
@@ -16,7 +17,7 @@ const { MediaContextProvider, Media } = createMedia({
 const DesktopContainer = (props) => {
     return (
         <Media greaterThan='mobile' >
-            <TabExamplePointing/>
+            <SliderDesktop />
         </Media>
     )
 }
@@ -28,7 +29,7 @@ DesktopContainer.propTypes = {
 const MobileContainer = (props) => {
     return (
         <Media at='mobile'>
-           <TabMobile/>
+            <SliderMobile />
         </Media >
     )
 }
@@ -49,11 +50,10 @@ ResponsiveContainer.propTypes = {
 }
 
 
-const TabLayout = () => {
+const SliderLayout = () => {
     return (
         <ResponsiveContainer />
     )
 }
 
-export default TabLayout
-
+export default SliderLayout

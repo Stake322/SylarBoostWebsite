@@ -9,11 +9,10 @@ import {
     Segment,
     Sidebar,
 } from 'semantic-ui-react';
-import disc from './resources/discord.png';
+import disc from '../../resources/discord.png';
 import TopMenu from './TopMenu.js';
 import { Link } from "react-router-dom";
-import FlexText from "./FlexText";
-import topImage from './resources/original.jpg'
+import topImage from '../../resources/original.jpg'
 
 //PageLayout
 import { createMedia } from '@artsy/fresnel'
@@ -85,8 +84,8 @@ const MobileContainer = (props) => {
 
     return (
         <Media at='mobile' >
-            <div style={{ backgroundImage: "url(https://99px.ru/sstorage/56/2018/12/11312181905353276.jpg)"}}>
-                <Segment size="tiny" inverted color="purple" style={{ backgroundImage: `url(${topImage})`, fontSize: "100%" , display: "grid", placeItems: "center"}}>
+            <div style={{ backgroundImage: "url(https://99px.ru/sstorage/56/2018/12/11312181905353276.jpg)" }}>
+                <Segment size="tiny" inverted color="purple" style={{ backgroundImage: `url(${topImage})`, fontSize: "100%", display: "grid", placeItems: "center" }}>
                     <Menu size="mini" inverted secondary >
                         <Link to="/">
                             <Menu.Item

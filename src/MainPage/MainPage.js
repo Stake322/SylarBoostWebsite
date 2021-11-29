@@ -1,18 +1,18 @@
 import React, { useState, useEffect } from 'react'
-import Tabs from "./Tabs.js";
-import CardReviews from "./CardReviews.js";
+import Tabs from "./Tabs/TabsDesktop.js";
+import CardReviews from "./CardReview/CardReviewsDesktop.js";
 import { Container, Segment } from 'semantic-ui-react';
 import FadeAnimate from 'react-reveal/Fade';
-import Slider from "./Slider.js";
-import TypeText from './TypeText.js';
-import TabLayout from './TabsLayout.js';
+import TypeText from './Typetext/TypeText';
+import TabLayout from './Tabs/TabsLayout.js';
+import SliderLayout from './Slider/SliderLayout.js';
+import CardReviewsLayout from "./CardReview/CardReviewsLayout.js"
 
 const MainPage = () => {
     const sliderStyle = {
         backgroundImage: 'url(https://estnn.com/wp-content/uploads/2019/12/dotashld.jpg',
         backgroundSize: "cover",
         backgroundRepeat: "no-repeat",
-        width: "100%"
     }
     const grid = {
         backgroundImage: 'url(https://wallpaperaccess.com/full/3705495.jpg)',
@@ -39,13 +39,17 @@ const MainPage = () => {
                     </FadeAnimate>
                 </Container>
             </div>
-            <Container fluid textAlign="center" style={sliderStyle}>
+            <div style={sliderStyle}>
                 <FadeAnimate delay={1000} left>
-                    <Slider />
+                    <Container fluid textAlign="center">
+                        <SliderLayout />
+                    </Container>
                 </FadeAnimate>
-            </Container>
+            </div>
+
+
             <div style={grid}>
-                <CardReviews />
+                <CardReviewsLayout />
             </div>
         </div>
     )

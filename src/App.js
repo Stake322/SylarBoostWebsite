@@ -1,20 +1,19 @@
 import React from "react";
 import './App.css';
 import BottomBar from "./BottomBar.js";
-import TopBar from "./Topbar.js"
-import MainPage from './MainPage'
+import TopBar from "./MainPage/Topbar/Topbar.js"
+import MainPage from './MainPage/MainPage.js'
 import {
     HashRouter as Router,
     Switch,
     Route
 } from "react-router-dom";
-import Youtube from "./youtube/Youtube"
+import Youtube from "./youtube/YoutubeDesktop"
 import Twitch from "./Twitch.js";
 import Boost from "./boost/Boost.js";
 import Faq from "./faq/FAQ.js";
 import Accs from "./accounts/Accs.js";
 import MainPudgeGame from "./pudgeGame/MainPudgeGame";
-import PageLayout from "./PageLayout";
 
 function App() {
     return (
@@ -44,9 +43,7 @@ function App() {
                     <Route exact path="/pudge">
                         <MainPudgeGame />
                     </Route>
-                    <Route exact path="/page">
-                        <PageLayout />
-                    </Route>
+                 
 
                 </Switch>
 

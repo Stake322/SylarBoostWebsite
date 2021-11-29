@@ -1,27 +1,27 @@
 import React from 'react'
 import { Tab, Image, Button, Icon, Container, Grid, Segment } from 'semantic-ui-react';
-import immortal from './img/Immortal.png';
-import immortal2 from './img/bc.jpg';
-import immortal3 from './img/accounts.jpg';
-import immortal4 from './img/dotaplus.png';
+import immortal from '../../img/Immortal.png';
+import immortal2 from '../../img/bc.jpg';
+import immortal3 from '../../img/accounts.jpg';
+import immortal4 from '../../img/dotaplus.png';
 import { Link } from "react-router-dom";
 
 const TabMobile = () => {
     const
         textCss1 = {
-            fontSize: "40%",
+            fontSize: "55%",
             marginBottom: "5%",
             color: "#4A2545",
             fontFamily: "'Lora', serif"
         },
         titleTab = {
             alingItems: "center",
-            fontSize: "40%",
+            fontSize: "67%",
             color: "#4A2545"
         },
         sizeTab = {
             // height: "550px",
-            // width: "604px",
+            width: "",
             backgroundColor: "#F0DBD1"
         },
         tabsStyle = { background: "rgba(195, 0, 255, 0.342)", }
@@ -131,11 +131,13 @@ const TabMobile = () => {
         // secondary: true,
         // borderless: false,
         // widths: 4,
-        fluid: true, vertical: true, tabular: true,
+        fluid: true, 
+        // vertical: true, 
+        // tabular: true,
         style: {
             // textAlign: "center",
             backgroundColor: "#F0DBD1",
-            fontSize: "30%",
+            fontSize: "65%",
         }
     }
 
