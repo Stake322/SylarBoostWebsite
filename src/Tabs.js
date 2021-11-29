@@ -1,5 +1,5 @@
 import React from 'react'
-import { Tab, Image, Button, Icon, Container, Grid } from 'semantic-ui-react';
+import { Tab, Image, Button, Icon, Container, Grid, Segment } from 'semantic-ui-react';
 import immortal from './img/Immortal.png';
 import immortal2 from './img/bc.jpg';
 import immortal3 from './img/accounts.jpg';
@@ -30,7 +30,9 @@ const TabExamplePointing = () => {
             border: "3px solid black",
             width: "800px",
             height: "280px"
-        }
+        },
+        tabsStyle = { background: "rgba(195, 0, 255, 0.342)", height: "634px" }
+
 
     const ContainerBoost = (
         <Container fluid >
@@ -179,9 +181,11 @@ const TabExamplePointing = () => {
     }
 
     return (
-        <Container textAlign="center">
-            <Tab menu={menu} panes={panes} />
-        </Container>
+        <Segment raised style={tabsStyle}>
+            <Container textAlign="center">
+                <Tab menu={menu} panes={panes} />
+            </Container>
+        </Segment>
     )
 }
 

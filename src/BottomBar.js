@@ -11,7 +11,7 @@ import { Link } from "react-router-dom";
 
 const BottomBar = () => {
     return (
-        <Segment inverted vertical style={{ position: "relative", left: "0", bottom: "0", width: "100%", textAlign: "center", backgroundColor: "#36274C" }}>
+        <Segment inverted vertical style={{textAlign: "center", backgroundColor: "#36274C" }}>
             <Container >
                 <Grid divided inverted stackable>
                     <Grid.Row>

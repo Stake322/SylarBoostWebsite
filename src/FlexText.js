@@ -5,20 +5,22 @@ import { Container } from 'semantic-ui-react'
 class TypedReactDemo extends React.Component {
   componentDidMount() {
     const { strings } = this.props;
+    const { font } = this.props;
     const options = {
       strings: strings,
       typeSpeed: 50,
-      backSpeed: 50
+      backSpeed: 50,
     };
 
     this.typed = new Typed(this.el, options);
   }
+
   componentWillUnmount() {
     this.typed.destroy();
   }
   render() {
     const styleText = {
-      fontSize: "200%",
+      fontSize: "180%",
       color: "#FDFDFF",
       // paddingLeft:"50%",
       position: "relative",
@@ -27,11 +29,7 @@ class TypedReactDemo extends React.Component {
 
 
       styleDiv = {//space
-        backgroundImage: "url(https://99px.ru/sstorage/56/2018/12/11312181905353276.jpg)",
-        backgroundSize: "cover",
-        backgroundRepeat: "no-repeat",
         height: "150px",
-        width: "100%",
         position: "relative"
       }
 
@@ -51,3 +49,4 @@ class TypedReactDemo extends React.Component {
 }
 
 export default TypedReactDemo;
+

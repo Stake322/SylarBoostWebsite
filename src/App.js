@@ -14,14 +14,14 @@ import Boost from "./boost/Boost.js";
 import Faq from "./faq/FAQ.js";
 import Accs from "./accounts/Accs.js";
 import MainPudgeGame from "./pudgeGame/MainPudgeGame";
+import PageLayout from "./PageLayout";
 
 function App() {
     return (
         <Router>
             <>
                 <TopBar />
-                <div style={{paddingBottom: "4.5%"}} >
-                </div>
+          
                 <Switch>
                     <Route exact path="/">
                         <MainPage />
@@ -42,11 +42,14 @@ function App() {
                         <Accs />
                     </Route>
                     <Route exact path="/pudge">
-                    <MainPudgeGame />
+                        <MainPudgeGame />
                     </Route>
-                
+                    <Route exact path="/page">
+                        <PageLayout />
+                    </Route>
+
                 </Switch>
-               
+
                 <BottomBar />
             </>
         </Router>
