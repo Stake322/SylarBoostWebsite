@@ -1,8 +1,7 @@
 import React from 'react'
 import { createMedia } from '@artsy/fresnel'
 import PropTypes from 'prop-types'
-import YoutubeDesktop from "./YoutubeDesktop";
-
+import MainPudgeGame from "./MainPudgeGame";
 
 const { MediaContextProvider, Media } = createMedia({
     breakpoints: {
@@ -16,7 +15,7 @@ const { MediaContextProvider, Media } = createMedia({
 const DesktopContainer = (props) => {
     return (
         <Media greaterThan='mobile' >
-          <YoutubeDesktop/>
+            <MainPudgeGame />
         </Media>
     )
 }
@@ -28,9 +27,7 @@ DesktopContainer.propTypes = {
 const MobileContainer = (props) => {
     return (
         <Media at='mobile'>
-          <div>
-              Эта страница на мобильной версии не поддерживается
-          </div>
+            Эта страница на мобильной версии не поддерживается
         </Media >
     )
 }
@@ -51,9 +48,10 @@ ResponsiveContainer.propTypes = {
 }
 
 
-const YoutubeLayout = () => {
+const MainPudgeLayout = () => {
     return (
         <ResponsiveContainer />
     )
 }
-export default YoutubeLayout
+
+export default MainPudgeLayout

@@ -17,7 +17,7 @@ const styleDiv = {//space
     backgroundImage: "url(https://99px.ru/sstorage/56/2018/12/11312181905353276.jpg)",
 }
 
-const Accs = () => {
+const AccsDesktop = () => {
     const Obj = [{
         nickName: "5500 ММР", date: "4500 РУБЛЕЙ", avatar: imagelink1, description: "10000 ПОРЯДОЧНОСТИ, РОДНАЯ ПОЧТА", id: "925310369"
     }, {
@@ -61,17 +61,17 @@ const Accs = () => {
                             <Header style={textCss} textAlign="center" as="h2"> Аккаунты ДОТА 2 </Header>
                             <p style={textCss}>1. Выбираете аккаунт. <br></br>
                          2. Связывайтесь с нами.  <br></br>
-                         3. Оплачивайете. <br></br>
+                         3. Оплачиваете. <br></br>
                          4. В течение 5 минут будете иметь доступ к аккаунту.</p>
                         </Grid.Column>
                     </Grid>
                 </Segment>
-                <Segment hidden textAlign="center" size="massive" raised style={segmentStyle}>
+                {/* <Segment hidden textAlign="center" size="massive" raised style={segmentStyle}>
                     <Header style={textCss} as="h2"> На данный момент аккаунтов нет в наличии </Header>
                     <Header style={textCss} as="h2"> Но вы можете связаться с нами, чтобы заказать аккаунт по Вашим предпочтениям</Header>
                     <Button color="vk" onClick={() => window.open("https://vk.com/topic-187930680_41834234")}>Группа вКонтакте</Button>
                     <Button color="blue" onClick={() => window.open("https://discord.gg/VzyMR9BQUt")}>Discord</Button>
-                </Segment>
+                </Segment> */}
                 <Segment textAlign="center" size="massive" raised style={segmentStyle}>
                     <Card.Group textAlign="center" itemsPerRow={4}>
                         {renderCards()}
@@ -85,4 +85,4 @@ const Accs = () => {
     )
 
 }
-export default Accs;
+export default AccsDesktop;

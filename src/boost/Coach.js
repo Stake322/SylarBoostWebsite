@@ -17,7 +17,7 @@ import * as api from "../api";
 const requstType = "coach";
 
 
-const options = [
+const desktopOptions = [
     { key: '1', text: 'БЕЗ РЕЙТИНГА', value: 'без рейтинга', image: unranked },
     { key: '2', text: '1-2000', value: 'меньше 2000', image: straj },
     { key: '3', text: '2000-3000', value: '2000-3000', image: geroy },
@@ -29,6 +29,20 @@ const options = [
     { key: '9', text: '6500-7000', value: 'около 7000', image: immortal2 },
     { key: '10', text: '7000-7500', value: 'около 7500', image: immortal2 },
 ]
+const mobileOptions = [
+    { key: '1', text: 'БЕЗ РЕЙТИНГА', value: 'без рейтинга' },
+    { key: '2', text: '1-2000', value: 'меньше 2000', },
+    { key: '3', text: '2000-3000', value: '2000-3000', },
+    { key: '4', text: '3000-4000', value: '3000-4000', },
+    { key: '5', text: '4000-5000', value: '4000-5000', },
+    { key: '6', text: '5000-5500', value: 'около 5500', },
+    { key: '7', text: '5500-6000', value: 'около 6000', },
+    { key: '8', text: '6000-6500', value: 'около 6500', },
+    { key: '9', text: '6500-7000', value: 'около 7000', },
+    { key: '10', text: '7000-7500', value: 'около 7500', },
+]
+
+
 
 // const config = require('./config.json');
 const prices = [999, 1800, 2500]
@@ -147,9 +161,14 @@ const Coach = (props) => {
             setPromo(checkPromo);
             setInputResult(`Обучение на ${count} ${hours} за ${result} рублей. У вас ${currentValue} ММР. ПРОМОКОД: ${promo}`)
         }, 500);
-    }, [currentValue, count, result, hours, dispSegment, discount,promoSegment]);
+    }, [currentValue, count, result, hours, dispSegment, discount, promoSegment]);
 
-
+    let Font = "";
+    if (props.Mobile) {
+        Font = "150%"
+    } else {
+        Font = "100%"
+    }
     return (
 
         <div>
@@ -158,82 +177,115 @@ const Coach = (props) => {
                 <Container>
                     <Grid>
                         <Grid.Row>
-                            <Grid.Column textAlign="center" width={10}>
-                                <h3>ВЫБЕРИТЕ ТЕКУЩИЙ ММР</h3>
+                            <Grid.Column textAlign="center" width={props.Mobile ? 8 : 10}>
+                                <h3 style={{ fontSize: Font }}>ВЫБЕРИТЕ ТЕКУЩИЙ ММР</h3>
                                 <Dropdown
-                                    placeholder='Выберите ваш ММР'
+                                    style={{ fontSize: Font, width: "100%", }}
+                                    placeholder='Выберите ВАШ ММР'
                                     fluid
                                     selection
                                     defaultValue="0"
-                                    options={options}
+                                    options={props.Mobile ? mobileOptions : desktopOptions}
                                     onChange={(e, { value }) => setCurrentValue(value)}
+                                    compact
                                 />
                             </Grid.Column>
-                            <Grid.Column width={6}>
-                                <h3>СКОЛЬКО ЧАСОВ БУДЕТ ЗАНЯТИЕ</h3>
-                                <Input action={{
-                                    color: 'teal',
-                                    labelPosition: 'right',
-                                    icon: 'time',
-                                    content: `${hours}`,
-                                }}
-                                    actionPosition='right'
-                                    defaultValue={count}
-                                    value={count}
-                                >
-                                </Input>
-                                <input
-                                    fontSize="130%"
-                                    type='range'
-                                    max="3"
-                                    min='1'
-                                    step="1"
-                                    value={count}
-                                    onChange={(event) => { setCount(event.target.value) }}
-                                />
+                            <Grid.Column width={props.Mobile ? 8 : 6}>
+                                {props.Mobile ?
+                                    <h3 style={{ fontSize: Font }}>СКОЛЬКО ЗАНЯТИЙ</h3>
+                                    : <h3 style={{ fontSize: Font }}>СКОЛЬКО ЧАСОВ БУДЕТ ЗАНЯТИЕ</h3>
+                                }
+                                {props.Mobile ?
+                                    <Input
+                                        style={{ fontSize: Font, width: "100%" }}
+                                        value={count}
+                                    />
+                                    : <Input
+                                        style={{ fontSize: Font, width: "100%" }}
+                                        action={{
+                                            color: 'teal',
+                                            labelPosition: 'right',
+                                            icon: 'time',
+                                            content: `${hours}`,
+                                        }}
+                                        actionPosition='right'
+                                        defaultValue={count}
+                                        value={count}
+                                    />
+                                }
+                                {props.Mobile ?
+                                    <div>
+                                        <Button size="tiny" color="violet" content="1" onClick={(event) => setCount(1)} style={{ fontSize: Font }} />
+                                        <Button size="tiny" color="violet" content="2" onClick={(event) => setCount(2)} style={{ fontSize: Font }} />
+                                        <Button size="tiny" color="violet" content="3" onClick={(event) => setCount(3)} style={{ fontSize: Font }} />
+                                    </div>
+                                    : <input
+                                        fontSize="130%"
+                                        type='range'
+                                        max="3"
+                                        min='1'
+                                        step="1"
+                                        value={count}
+                                        onChange={(event) => { setCount(event.target.value) }}
+                                    />
+                                }
                             </Grid.Column>
                         </Grid.Row>
                         <Grid.Row textAlign="center">
-                            <Grid.Column width={10}>
-                                <Input
-                                    value={result}
-                                    action={{
-                                        color: 'teal',
-                                        labelPosition: 'left',
-                                        icon: 'cart',
-                                        content: 'ЦЕНА',
-                                    }}
-                                    actionPosition='left'
-                                />
+                            <Grid.Column width={props.Mobile ? 8 : 10}>
+                                {props.Mobile ?
+                                    <div>
+                                        <Input
+                                            style={{ width: "70%" }}
+                                            value={result}
+                                            icon='cart'
+                                            iconPosition='left'
+                                            focus
+                                        />
+                                        <span style={{ fontSize: Font }}> Рублей </span>
+                                    </div>
+                                    : <Input
+                                        value={result}
+                                        action={{
+                                            color: 'teal',
+                                            labelPosition: 'left',
+                                            icon: 'cart',
+                                            content: 'ЦЕНА',
+                                        }}
+                                        actionPosition='left'
+                                    />
+                                }
+
                             </Grid.Column>
-                            <Grid.Column width={6}>
+                            <Grid.Column width={props.Mobile ? 8 : 6}>
 
                                 <Input
+
                                     size="small"
                                     onChange={(event) => setPromo(event.target.value)}
                                     placeholder="Введите промокод"
                                     value={promo}
                                     onClick={checkPromo}
                                 />
-                                <Button size="tiny" onClick={checkPromo} color="green" >
+                                <Button style={{ fontSize: "90%" }} size="tiny" onClick={checkPromo} color="green" >
                                     Проверить
                                 </Button>
                                 {promoSegment === 1
                                     ?
-                                    <Segment>
+                                    <Segment size={props.Mobile ? "tiny" : "large"} style={{ fontSize: Font }}>
                                         Промокод {promo} введён успешно <Icon name="check" /> СКИДКА {discount} %
                                     </Segment>
                                     : null
                                 }
                                 {promoSegment === 2
                                     ?
-                                    <Segment>
+                                    <Segment size={props.Mobile ? "tiny" : "large"} style={{ fontSize: Font }}>
                                         Вы ввели неправильно промокод <Icon name="x" />
                                     </Segment>
                                     : null
                                 }
                             </Grid.Column>
-                            <Button style={{ marginTop: "5%", marginLeft: "auto", marginRight: "auto" }} onClick={NextStep1} textAlign="center" color='violet'>Продолжить</Button>
+                            <Button style={{ fontSize: Font, marginTop: "5%", marginLeft: "auto", marginRight: "auto" }} onClick={NextStep1} textAlign="center" color='violet'>Продолжить</Button>
                         </Grid.Row>
 
                     </Grid>
@@ -253,26 +305,26 @@ const Coach = (props) => {
                         <Input>
                             {inputResult}
                         </Input> <br></br>
-                        
+
                         <Button icon="play" onClick={SegmentInfo} >Информация о тренировке</Button>
                         {dispSegment
-                        ?
-                        <Segment>
-                            <h4>Для того чтобы тренировка прошла максимально эфективно нужно подготовить:</h4> <br></br>
-                            1. Реплеи вашей игры <br></br>
-                            2. Как можно больше вопросов <br></br>
-                            Цель обучения это сделать так, чтобы Вы стали лучше понимать как играть в доту 2. <br></br>
-                            1) Лейнинг стадия, как нужно правильно стоять лайн, чтобы потом можно было выиграть игру.<br></br>
-                            2) Середина игры, где себя найти на карте, где фармить и так далее.<br></br>
-                            3) Айтем и скилл билды, максимально оптимальные для победы.<br></br>
-                            4) Разберём 2-3 ваших реплея игры, укажу на хорошие или плохие моменты.<br></br>
-                            После тренировки вы почувствуете результат уже в первой игре. <br></br>
-                            Если у вас остаются какие-либо вопросы после тренировки - вы всегда можете их задавать, консультации после обучения абсолютно бесплатны.<br></br>
-                            Многие кто заказывал обучение, очень довольны, т.к. после него появилось много побед. <br></br>
-                            <h3>Отзывы можно посмотреть здесь</h3>
-                            <Button color="blue" onClick={FunPay}>FunPay</Button> <Button color="vk" onClick={VK}>Группа вКонтакте</Button>
-                        </Segment>
-                        : null}
+                            ?
+                            <Segment>
+                                <h4>Для того чтобы тренировка прошла максимально эфективно нужно подготовить:</h4> <br></br>
+                                1. Реплеи вашей игры <br></br>
+                                2. Как можно больше вопросов <br></br>
+                                Цель обучения это сделать так, чтобы Вы стали лучше понимать как играть в доту 2. <br></br>
+                                1) Лейнинг стадия, как нужно правильно стоять лайн, чтобы потом можно было выиграть игру.<br></br>
+                                2) Середина игры, где себя найти на карте, где фармить и так далее.<br></br>
+                                3) Айтем и скилл билды, максимально оптимальные для победы.<br></br>
+                                4) Разберём 2-3 ваших реплея игры, укажу на хорошие или плохие моменты.<br></br>
+                                После тренировки вы почувствуете результат уже в первой игре. <br></br>
+                                Если у вас остаются какие-либо вопросы после тренировки - вы всегда можете их задавать, консультации после обучения абсолютно бесплатны.<br></br>
+                                Многие кто заказывал обучение, очень довольны, т.к. после него появилось много побед. <br></br>
+                                <h3>Отзывы можно посмотреть здесь</h3>
+                                <Button color="blue" onClick={FunPay}>FunPay</Button> <Button color="vk" onClick={VK}>Группа вКонтакте</Button>
+                            </Segment>
+                            : null}
                     </Segment>
                     <Button onClick={setCopied}>
                         Нужно скопировать :  {isCopied ? "Копирование прошло успешно! 👍" : "Еще не скопировал! 👎"}

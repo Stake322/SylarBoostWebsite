@@ -12,15 +12,15 @@ import Youtube from "./youtube/YoutubeDesktop"
 import Twitch from "./Twitch.js";
 import Boost from "./boost/Boost.js";
 import Faq from "./faq/FAQ.js";
-import Accs from "./accounts/Accs.js";
-import MainPudgeGame from "./pudgeGame/MainPudgeGame";
+import AccsLayout from "./accounts/AccsLayout.js";
+import MainPudgeLayout from "./pudgeGame/MainPudgeLayout.js"
 
 function App() {
     return (
         <Router>
             <>
                 <TopBar />
-          
+
                 <Switch>
                     <Route exact path="/">
                         <MainPage />
@@ -38,12 +38,12 @@ function App() {
                         <Faq />
                     </Route>
                     <Route exact path="/accounts">
-                        <Accs />
+                        <AccsLayout />
                     </Route>
                     <Route exact path="/pudge">
-                        <MainPudgeGame />
+                        <MainPudgeLayout />
                     </Route>
-                 
+
 
                 </Switch>
 

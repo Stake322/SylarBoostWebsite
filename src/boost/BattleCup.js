@@ -122,7 +122,7 @@ const BattleCup = (props) => {
             setInputResult(` БАТЛ КАП ТИР ${value} | ${infoParty} | ${infoStream}| за ${result} рублей. Промокод: ${promo} `)
         }, 500);
 
-    }, [value, result, isParty, infoParty, infoStream, smthSelected,promoSegment]);
+    }, [value, result, isParty, infoParty, infoStream, smthSelected, promoSegment]);
 
     const mobile = () => {
         setEmailGuard(false)
@@ -157,7 +157,12 @@ const BattleCup = (props) => {
     };
 
 
-
+    let Font = "";
+    if (props.Mobile) {
+        Font = "150%"
+    } else {
+        Font = "100%"
+    }
     return (
         <div>
             {step === 1
@@ -166,8 +171,9 @@ const BattleCup = (props) => {
                     <Grid>
                         <Grid.Row>
                             <Grid.Column width={8}>
-                                <h3>ТЕКУЩИЙ ТИР</h3>
+                                <h3 style={{ fontSize: Font }}>ТЕКУЩИЙ ТИР</h3>
                                 <Dropdown
+
                                     placeholder='Выберите текущий рейтинг'
                                     fluid
                                     selection
@@ -177,41 +183,72 @@ const BattleCup = (props) => {
                                 />
                             </Grid.Column>
                             <Grid.Column textAlign="center" width={8}>
-                                <h4>Если необходима услуга, выберите одну:</h4>
-                                <Label
-                                    circular
-                                    size="large"
-                                >
-                                    <Checkbox
-                                        checked={smthSelected && isParty}
-                                        onClick={(e) => {
-                                            setSmthSelected(e.target.checked)
-                                            setIsParty(e.target.checked)
-                                        }}
-                                        color="primary"
-                                    />
-                                    пати
-                                </Label>
-                                <Label
-                                    size="large"
-                                    circular
-                                >
-                                    <Checkbox
-                                        checked={smthSelected && !isParty}
-                                        onClick={(e) => {
-                                            setSmthSelected(e.target.checked)
-                                            setIsParty(!e.target.checked)
-                                        }}
-                                        color="primary"
-                                    />
-                                    стрим
-                                </Label>
+                                <h4 style={{ fontSize: Font }}>Если необходима услуга, выберите одну:</h4>
+                                {props.Mobile ?
+                                    <div>
+                                        <div>
+                                            <Checkbox
+                                                checked={smthSelected && isParty}
+                                                onClick={(e) => {
+                                                    setSmthSelected(e.target.checked)
+                                                    setIsParty(e.target.checked)
+                                                }}
+                                                color="primary"
+                                            />
+                                            в пати
+                                        </div>
+                                        <div>
+                                            <Checkbox
+                                                checked={smthSelected && !isParty}
+                                                onClick={(e) => {
+                                                    setSmthSelected(e.target.checked)
+                                                    setIsParty(!e.target.checked)
+                                                }}
+                                                color="primary"
+                                            />
+                                            стрим
+                                        </div>
+                                    </div>
+                                    :
+                                    <div>
+                                        <Label
+                                            circular
+                                            size="large"
+                                        >
+                                            <Checkbox
+                                                checked={smthSelected && isParty}
+                                                onClick={(e) => {
+                                                    setSmthSelected(e.target.checked)
+                                                    setIsParty(e.target.checked)
+                                                }}
+                                                color="primary"
+                                            />
+                                            пати
+                                        </Label>
+                                        <Label
+                                            size="large"
+                                            circular
+                                        >
+                                            <Checkbox
+                                                checked={smthSelected && !isParty}
+                                                onClick={(e) => {
+                                                    setSmthSelected(e.target.checked)
+                                                    setIsParty(!e.target.checked)
+                                                }}
+                                                color="primary"
+                                            />
+                                            стрим
+                                        </Label>
+                                    </div>
+                                }
+
                             </Grid.Column>
                         </Grid.Row>
                         <Divider />
                         <Grid.Row>
                             <Grid.Column textAlign="center" width={8}>
                                 <Input
+                                    style={{ fontSize: Font }}
                                     fluid
                                     value={result}
                                     icon='cart'
@@ -224,6 +261,7 @@ const BattleCup = (props) => {
                             <Grid.Column textAlign="center" width={8}>
 
                                 <Input
+                                    style={{ fontSize: Font }}
                                     size="small"
                                     onChange={(event) => setPromo(event.target.value)}
                                     placeholder="Введите промокод"

@@ -1,8 +1,9 @@
 import React from 'react'
 import { createMedia } from '@artsy/fresnel'
 import PropTypes from 'prop-types'
-import YoutubeDesktop from "./YoutubeDesktop";
 
+import AccsDesktop from './AccsDesktop'
+import AccsMobile from "./AccsMobile.js"
 
 const { MediaContextProvider, Media } = createMedia({
     breakpoints: {
@@ -16,7 +17,7 @@ const { MediaContextProvider, Media } = createMedia({
 const DesktopContainer = (props) => {
     return (
         <Media greaterThan='mobile' >
-          <YoutubeDesktop/>
+            <AccsDesktop />
         </Media>
     )
 }
@@ -28,9 +29,7 @@ DesktopContainer.propTypes = {
 const MobileContainer = (props) => {
     return (
         <Media at='mobile'>
-          <div>
-              Эта страница на мобильной версии не поддерживается
-          </div>
+            <AccsMobile />
         </Media >
     )
 }
@@ -51,9 +50,10 @@ ResponsiveContainer.propTypes = {
 }
 
 
-const YoutubeLayout = () => {
+const AccsLayout = () => {
     return (
         <ResponsiveContainer />
     )
 }
-export default YoutubeLayout
+
+export default AccsLayout;

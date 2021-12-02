@@ -11,8 +11,7 @@ import unranked from "../icons/SeasonalRank0-0.png";
 import * as api from "../api";
 import useClipboard from "react-use-clipboard";
 
-
-const options = [
+const desktopOptions = [
     { key: '1', text: 'БЕЗ РЕЙТИНГА', value: 'без рейтинга', image: unranked },
     { key: '2', text: '1-2000', value: 'меньше 2000', image: straj },
     { key: '3', text: '2000-3000', value: '2000-3000', image: geroy },
@@ -24,7 +23,18 @@ const options = [
     { key: '9', text: '6500-7000', value: 'около 7000', image: immortal2 },
     { key: '10', text: '7000-7500', value: 'около 7500', image: immortal2 },
 ]
-
+const mobileOptions = [
+    { key: '1', text: 'БЕЗ РЕЙТИНГА', value: 'без рейтинга' },
+    { key: '2', text: '1-2000', value: 'меньше 2000', },
+    { key: '3', text: '2000-3000', value: '2000-3000', },
+    { key: '4', text: '3000-4000', value: '3000-4000', },
+    { key: '5', text: '4000-5000', value: '4000-5000', },
+    { key: '6', text: '5000-5500', value: 'около 5500', },
+    { key: '7', text: '5500-6000', value: 'около 6000', },
+    { key: '8', text: '6000-6500', value: 'около 6500', },
+    { key: '9', text: '6500-7000', value: 'около 7000', },
+    { key: '10', text: '7000-7500', value: 'около 7500', },
+]
 
 const priceLP = 90;
 const requstType = "Low Priority"
@@ -104,7 +114,7 @@ const Low = (props) => {
             setInputResult(` ММР на аккаунте ${currentValue} | отыграть ЛП игр: ${count}  | за ${result} рублей. Промокод: ${promo}`)
         }, 500);
 
-    }, [currentValue, count, time,promoSegment]);
+    }, [currentValue, count, time, promoSegment]);
 
     const mobile = () => {
         setEmailGuard(false)
@@ -138,6 +148,13 @@ const Low = (props) => {
         })
 
     };
+    let Font = "";
+    if (props.Mobile) {
+        Font = "150%"
+    } else {
+        Font = "100%"
+    }
+
 
     return (
         <div>
@@ -147,74 +164,98 @@ const Low = (props) => {
                     <Grid textAlign="center">
                         <Grid.Row>
                             <Grid.Column width={6}>
-                                <h3>ТЕКУЩИЙ ММР</h3>
+                                <h3 style={{ fontSize: Font  }}>ВЫБЕРИТЕ ТЕКУЩИЙ ММР</h3>
                                 <Dropdown
-                                    placeholder='Выберите текущий рейтинг'
+                                    style={{ fontSize: Font , width: "100%" , }}
+                                    placeholder='Выберите ВАШ ММР'
                                     fluid
                                     selection
                                     defaultValue="0"
-                                    options={options}
+                                    options={props.Mobile ? mobileOptions : desktopOptions}
                                     onChange={(e, { value }) => setCurrentValue(value)}
+                                    compact
                                 />
                             </Grid.Column>
                             <Grid.Column width={4}>
                                 <p>КОЛИЧЕСТВО ИГР: {count}</p>
-                                <input
-                                    fontSize="130%"
-                                    type='range'
-                                    max="5"
-                                    min='1'
-                                    step="1"
-                                    value={count}
-                                    onChange={(event) => { setCount(event.target.value) }}
-                                />
+                                {props.Mobile ?
+                                    <div>
+                                        <Button size="tiny" color="violet" content="1" onClick={(event) => setCount(1)} style={{ fontSize: Font  }} />
+                                        <Button size="tiny" positive content="+1" onClick={(event) => setCount(count + 1)} style={{ fontSize: Font  }} />
+                                        <Button size="tiny" negative content="-1" onClick={(event) => setCount(count - 1)} style={{ fontSize: Font  }} />
+                                        <Button size="tiny" color="violet" content="5" onClick={(event) => setCount(5)} style={{ fontSize: Font  }} />
+                                    </div>
+                                    : <input
+                                        fontSize="130%"
+                                        type='range'
+                                        max="3"
+                                        min='1'
+                                        step="1"
+                                        value={count}
+                                        onChange={(event) => { setCount(event.target.value) }}
+                                    />
+                                }
                             </Grid.Column>
                             <Grid.Column width={6}>
-                                <h3>ВРЕМЯ</h3>
-                                <Input maxLength="4" max="7500" value={time} disabled focus />
-                                <Popup content='Это примерное время'
+                                <h3 style={{ fontSize: "95%" }}>ВРЕМЯ</h3>
+                                <Input style={{ width: "100%"  }} maxLength="4" max="7500" value={time}  focus />
+                                <Popup
+                                    content='Это примерное время'
                                     size="tiny"
-                                    trigger={<Button circular icon='question circle' />} />
+                                    trigger={<Button circular icon='question circle' />} style={{ fontSize: "95%" }} />
 
                             </Grid.Column>
                         </Grid.Row>
 
                         <Grid.Row>
-                            <Grid.Column width={6}>
-                                <Input
-                                    value={result}
-                                    action={{
-                                        color: 'teal',
-                                        labelPosition: 'left',
-                                        icon: 'cart',
-                                        content: 'ЦЕНА',
-                                    }}
-                                    actionPosition='left'
-                                />
+                            <Grid.Column width={props.Mobile ? 8 : 10}>
+                                {props.Mobile ?
+                                    <div>
+                                        <Input
+                                            style={{ width: "70%" }}
+                                            value={result}
+                                            icon='cart'
+                                            iconPosition='left'
+                                            focus
+                                        />
+                                        <span style={{ fontSize: "150%" }}> Рублей </span>
+                                    </div>
+                                    : <Input
+                                        value={result}
+                                        action={{
+                                            color: 'teal',
+                                            labelPosition: 'left',
+                                            icon: 'cart',
+                                            content: 'ЦЕНА',
+                                        }}
+                                        actionPosition='left'
+                                    />
+                                }
+
                             </Grid.Column>
-
-                            <Grid.Column width={6}>
+                            <Grid.Column width={props.Mobile ? 8 : 6}>
 
                                 <Input
+
                                     size="small"
                                     onChange={(event) => setPromo(event.target.value)}
                                     placeholder="Введите промокод"
                                     value={promo}
                                     onClick={checkPromo}
                                 />
-                                <Button size="tiny" onClick={checkPromo} color="green" >
+                                <Button style={{ fontSize: "90%" }} size="tiny" onClick={checkPromo} color="green" >
                                     Проверить
                                 </Button>
                                 {promoSegment === 1
                                     ?
-                                    <Segment>
+                                    <Segment size={props.Mobile ? "tiny" : "large"} style={{ fontSize: Font  }}>
                                         Промокод {promo} введён успешно <Icon name="check" /> СКИДКА {discount} %
                                     </Segment>
                                     : null
                                 }
                                 {promoSegment === 2
                                     ?
-                                    <Segment>
+                                    <Segment size={props.Mobile ? "tiny" : "large"} style={{ fontSize: Font  }}>
                                         Вы ввели неправильно промокод <Icon name="x" />
                                     </Segment>
                                     : null
@@ -223,7 +264,7 @@ const Low = (props) => {
                         </Grid.Row>
                         <Grid.Row textAlign="center">
                             <Grid.Column columns={16} >
-                                <Button onClick={Step1} color='violet'>Подготовить данные</Button>
+                                <Button style={{ fontSize: Font  }} onClick={Step1} color='violet'>Подготовить данные</Button>
                             </Grid.Column>
                         </Grid.Row>
                     </Grid>

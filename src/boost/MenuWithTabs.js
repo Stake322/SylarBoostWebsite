@@ -26,13 +26,21 @@ const MenuWithTabs = (props) => {
             menuItem: 'БАТЛ КАП',
         }
     ]
+    let font = "";
 
+    if (props.Mobile){
+         font = "120%"
+    } else {
+         font = "100%"
+    }
+    
     const menu = {
         pointing: true,
         secondary: true,
         borderless: false,
-        fontSize: "150%",
+      
         style: {
+            fontSize: font,
             backgroundColor: "rgb(81, 0, 204, 0.65)",
         }
     };
@@ -44,19 +52,19 @@ const MenuWithTabs = (props) => {
             <Tab menu={menu} panes={panes} onTabChange={handleTabChange} />
             <div style={{ paddingTop: '10px' }} />
             <div hidden={!(tab === 0)}>
-                <CalcBoost config={props.myConfig} handleStepChange={props.handleStepChange} />
+                <CalcBoost config={props.myConfig} handleStepChange={props.handleStepChange} Mobile={props.Mobile} />
             </div>
             <div hidden={!(tab === 1)}>
-                <CalibrationCalc config={props.myConfig} handleStepChange={props.handleStepChange} />
+                <CalibrationCalc config={props.myConfig} handleStepChange={props.handleStepChange} Mobile={props.Mobile} />
             </div>
             <div hidden={!(tab === 2)}>
-                <Coach config={props.myConfig} handleStepChange={props.handleStepChange} />
+                <Coach config={props.myConfig} handleStepChange={props.handleStepChange} Mobile={props.Mobile} />
             </div>
             <div hidden={!(tab === 3)}>
-                <Low config={props.myConfig} handleStepChange={props.handleStepChange} />
+                <Low config={props.myConfig} handleStepChange={props.handleStepChange}  Mobile={props.Mobile}/>
             </div>
             <div hidden={!(tab === 4)}>
-                <Other config={props.myConfig} handleStepChange={props.handleStepChange} />
+                <Other config={props.myConfig} handleStepChange={props.handleStepChange} Mobile={props.Mobile}/>
             </div>
         </Container>
     )

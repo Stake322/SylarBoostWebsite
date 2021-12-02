@@ -8,7 +8,7 @@ const FAQ = () => {
     const contStyle = {
         backgroundImage: 'url(https://i.ytimg.com/vi/HZcTLJ-6UMI/maxresdefault.jpg)',
         backgroundSize: "cover",
-        height:"720px"
+        height:"1080px",
     }
     return (
         <div style={contStyle}>

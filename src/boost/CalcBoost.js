@@ -182,6 +182,13 @@ const CalcBoost = (props) => {
         setMobileGuard(false)
     }
 
+    let Font = "";
+    if (props.Mobile) {
+        Font = "150%"
+    } else {
+        Font = "100%"
+    }
+
     return (
         <div>
             {step === 1
@@ -189,86 +196,135 @@ const CalcBoost = (props) => {
                 <Container textAlign="center">
                     <Grid>
                         <Grid.Row>
-                            <Grid.Column width={6}>
-                                <h3>ТЕКУЩИЙ РЕЙТИНГ</h3>
-                                <Input size="large" type="text" maxLength="4" step="10" value={currentValue} onInput={(event) => setCurrentValue(event.target.value)} focus />
+                            <Grid.Column width={props.Mobile ? 5 : 6}>
+                                <h3 style={{ fontSize: Font }}>ТЕКУЩИЙ РЕЙТИНГ</h3>
+                                <Input type="number" maxLength="4" step="10" value={currentValue} onInput={(event) => setCurrentValue(event.target.value)} focus style={{ width: "100%" }} />
                             </Grid.Column>
-                            <Grid.Column width={4}>
-                                <p>+{flexValue}</p>
-                                <input
-                                    type='range'
-                                    max={minMaxStep(currentValue, newValue)}
-                                    min='100'
-                                    step="30"
-                                    value={importChange()}
-                                    onChange={(event) => { setFlexValue(event.target.value) }}
-                                />
+                            <Grid.Column width={props.Mobile ? 6 : 4}>
+                                <p>Всего ммр добавить: +{flexValue}</p>
+                                {props.Mobile ?
+                                    <div>
+                                        <Button size="tiny" positive content="+100" onClick={(event) => setFlexValue(flexValue + 100)} style={{ fontSize: Font }} />
+                                        <Button size="tiny" negative content="-100" onClick={(event) => setFlexValue(flexValue - 100)} style={{ fontSize: Font }} />
+                                        <Button size="tiny" positive content="+1000" onClick={(event) => setFlexValue(flexValue + 1000)} style={{ fontSize: Font }} />
+                                        <Button size="tiny" negative content="-1000" onClick={(event) => setFlexValue(flexValue - 1000)} style={{ fontSize: Font }} />
+
+                                    </div>
+                                    : <input
+                                        att='range'
+                                        type='range'
+                                        max={minMaxStep(currentValue, newValue)}
+                                        min='100'
+                                        step="30"
+                                        value={importChange()}
+                                        onChange={(event) => { setFlexValue(event.target.value) }}
+                                    />
+                                }
+
                             </Grid.Column>
-                            <Grid.Column textAlign="center" width={6}>
-                                <h3 style={{ paddingRight: "22%" }} >КОНЕЧНЫЙ РЕЙТИНГ</h3>
-                                <Image floated="right" size="tiny" src={rank} style={{ marginTop: "-8%" }} />
-                                <Input fluid style={{ textAlign: "20%" }} size="large" maxLength="4" max="7500" value={newValue} disabled focus />
+                            <Grid.Column textAlign="center" width={props.Mobile ? 5 : 6}>
+                                {props.Mobile ?
+                                    <div>
+                                        <h3 style={{ fontSize: Font }}>КОНЕЧНЫЙ РЕЙТИНГ</h3>
+                                        <Input fluid style={{ textAlign: "20%", color: "black", width: "100%" }} size="large" maxLength="4" max="7500" value={newValue} disabled focus />
+                                    </div>
+                                    :
+                                    <div>
+                                        <h3 style={{ paddingRight: "22%", fontSize: Font }} >КОНЕЧНЫЙ РЕЙТИНГ</h3>
+                                        <Image floated="right" size="tiny" src={rank} style={{ marginTop: "-8%" }} />
+                                        <Input fluid style={{ fontSize: "90%" }} size="large" maxLength="4" max="7500" value={newValue} disabled focus />
+                                    </div>
+                                }
+
                             </Grid.Column>
                         </Grid.Row>
                         <Grid.Row>
-                            <Grid.Column width={6}>
-                                <Label circular onClick={partyCheckbox} size="large" >
-                                    <Checkbox
-                                        checked={party}
-                                        onClick={partyCheckbox}
-                                        color="primary"
-                                    />
-                                    пати
-                                </Label>
-                                <Label size="large" circular onClick={streamCheckbox} >
-                                    <Checkbox
-                                        checked={stream}
-                                        onClick={streamCheckbox}
-                                        color="primary"
-                                    />
-                                    стрим
-                                </Label>
-                                <Label circular onClick={herosCheckbox} size="large" >
-                                    <Checkbox
-                                        checked={heros}
-                                        onClick={herosCheckbox}
-                                        color="primary"
-                                    />
-                                    герои
-                                </Label>
+                            <Grid.Column width={props.Mobile ? 5 : 6}>
+                                {props.Mobile ?
+                                    <div>
+                                        <Checkbox
+                                            checked={party}
+                                            onClick={partyCheckbox}
+                                            color="primary"
+                                            size={props.Mobile ? "small" : "medium"}
+                                        />
+                                        в пати
+                                        <Checkbox
+                                            checked={stream}
+                                            onClick={streamCheckbox}
+                                            color="primary"
+                                            size={props.Mobile ? "small" : "medium"}
+                                        />
+                                        стрим
+                                        <Checkbox
+                                            checked={heros}
+                                            onClick={herosCheckbox}
+                                            color="primary"
+                                            size={props.Mobile ? "small" : "medium"}
+                                        />
+                                        герои
+                                    </div> :
+                                    <div>
+                                        <Label circular onClick={partyCheckbox} size={props.Mobile ? "tiny" : "large"} >
+                                            <Checkbox
+                                                checked={party}
+                                                onClick={partyCheckbox}
+                                                color="primary"
+                                                size={props.Mobile ? "small" : "medium"}
+                                            />
+                                            пати
+                                        </Label>
+                                        <Label size={props.Mobile ? "tiny" : "large"} circular onClick={streamCheckbox} >
+                                            <Checkbox
+                                                checked={stream}
+                                                onClick={streamCheckbox}
+                                                color="primary"
+                                                size={props.Mobile ? "small" : "medium"}
+                                            />
+                                            стрим
+                                        </Label>
+                                        <Label circular onClick={herosCheckbox} size={props.Mobile ? "tiny" : "large"} >
+                                            <Checkbox
+                                                checked={heros}
+                                                onClick={herosCheckbox}
+                                                color="primary"
+                                                size={props.Mobile ? "small" : "medium"}
+                                            />
+                                            герои
+                                        </Label>
+                                    </div>
+                                }
                             </Grid.Column>
-                            <Grid.Column width={4}>
+                            <Grid.Column textAlign="center" width={props.Mobile ? 6 : 4}>
                                 <Input
-                                    fluid
+                                    style={{ width: "70%" }}
                                     value={result}
                                     icon='cart'
                                     iconPosition='left'
                                     focus
-                                    label="Руб."
-                                    labelPosition="right"
                                 />
+                                <span style={{ fontSize: Font }}> Рублей </span>
                             </Grid.Column>
-                            <Grid.Column width={6}>
+                            <Grid.Column width={props.Mobile ? 5 : 6}>
                                 <Input
+                                    style={{ width: "100%" }}
                                     size="small"
                                     onChange={(event) => setPromo(event.target.value)}
                                     placeholder="Введите промокод"
                                     value={promo}
                                     onClick={checkPromo}
                                 />
-                                <Button size="tiny" onClick={checkPromo} color="green" >
-                                    Проверить
-                                </Button>
+                                <Button size="tiny" onClick={checkPromo} color="green" compact content="Проверить" style={{ fontSize: "90%" }} />
                                 {promoSegment === 1
                                     ?
-                                    <Segment>
+                                    <Segment size={props.Mobile ? "tiny" : "large"} style={{ fontSize: Font }}>
                                         Промокод {promo} введён успешно <Icon name="check" /> СКИДКА {discount} %
                                     </Segment>
                                     : null
                                 }
                                 {promoSegment === 2
                                     ?
-                                    <Segment>
+                                    <Segment size={props.Mobile ? "tiny" : "large"} style={{ fontSize: Font }}>
                                         Вы ввели неправильно промокод <Icon name="x" />
                                     </Segment>
                                     : null
@@ -281,7 +337,7 @@ const CalcBoost = (props) => {
                     <Grid columns={1}>
                         <Grid.Row>
                             <Grid.Column>
-                                <Button onClick={nextStep1} color='violet'>Подготовить данные</Button>
+                                <Button style={{ fontSize: Font }} onClick={nextStep1} color='violet'>Подготовить данные</Button>
                             </Grid.Column>
                         </Grid.Row>
                     </Grid>
@@ -291,7 +347,7 @@ const CalcBoost = (props) => {
             {step === 2
                 ?
                 <Container >
-                    <Segment textAlign="center">
+                    <Segment textAlign="center" size={props.Mobile ? "tiny" : "large"}>
                         <p>
                             <h3>Как нужно подготовить данные?</h3>
                             1. Подготовьте логин и пароль, чтобы было всё без ошибок <br>
@@ -311,7 +367,7 @@ const CalcBoost = (props) => {
                     </Segment>
                     {mobileGuard
                         ?
-                        <Segment textAlign="center">
+                        <Segment textAlign="center" size={props.Mobile ? "tiny" : "large"}>
                             <p>
                                 <h4>
                                     Если у Вас стоит мобильный аутентификатор, то нужен постоянно код от мобильного приложения стим. <br></br>

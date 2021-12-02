@@ -9,14 +9,14 @@ import { Link } from "react-router-dom";
 const TabMobile = () => {
     const
         textCss1 = {
-            fontSize: "55%",
+            fontSize: "60%",
             marginBottom: "5%",
             color: "#4A2545",
             fontFamily: "'Lora', serif"
         },
         titleTab = {
             alingItems: "center",
-            fontSize: "67%",
+            fontSize: "100%",
             color: "#4A2545"
         },
         sizeTab = {
@@ -128,12 +128,12 @@ const TabMobile = () => {
     ]
     const menu = {
         pointing: true,
-        // secondary: true,
-        // borderless: false,
+        secondary: true,
+        borderless: false,
         // widths: 4,
-        fluid: true, 
+        // fluid: true, 
         // vertical: true, 
-        // tabular: true,
+        tabular: true,
         style: {
             // textAlign: "center",
             backgroundColor: "#F0DBD1",

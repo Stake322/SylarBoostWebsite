@@ -6,6 +6,8 @@ import someIgame2 from "../../img/2.jpg";
 import someIgame3 from "../../img/3.jpg";
 import someIgame4 from "../../img/4.png";
 
+// TODO: обрезать скрины для мобильной версии (нужная инфа)
+
 function SampleNextArrow(props) {
     const { className, style, onClick } = props;
     return (
@@ -34,7 +36,7 @@ class SliderMobile extends Component {
         const h2 = {
             color: "#F0DBD1",
             textAlign: "center",
-            fontSize: "95%"
+            fontSize: "140%"
         }
 
         const settings = {
@@ -55,7 +57,7 @@ class SliderMobile extends Component {
                 <Slider {...settings}>
                     <div>
                         <Image src={someIgame1} />
-                        <Label ize="large" color="black" attached="bottom">Буст: 5000-6300</Label>
+                        <Label size="large" color="black" attached="bottom">Буст: 5000-6300</Label>
                     </div>
                     <div>
                         <Image src={someIgame2} />
