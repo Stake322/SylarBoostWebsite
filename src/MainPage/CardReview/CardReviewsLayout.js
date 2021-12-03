@@ -1,8 +1,7 @@
 import React from 'react'
 import { createMedia } from '@artsy/fresnel'
 import PropTypes from 'prop-types'
-import CardReviews from './CardReviewsDesktop'
-import CardReviewsMobile from './CardReviewsMobile'
+import CardReviews from './CardReviews.js'
 
 
 const { MediaContextProvider, Media } = createMedia({
@@ -27,9 +26,10 @@ DesktopContainer.propTypes = {
 }
 
 const MobileContainer = (props) => {
+    const Mobile = true;
     return (
         <Media at='mobile'>
-         <CardReviewsMobile/>
+         <CardReviews Mobile={Mobile}/>
         </Media >
     )
 }
@@ -50,10 +50,10 @@ ResponsiveContainer.propTypes = {
 }
 
 
-const PageLayout = () => {
+const CardReviewsLayout = () => {
     return (
         <ResponsiveContainer />
     )
 }
 
-export default PageLayout
+export default CardReviewsLayout

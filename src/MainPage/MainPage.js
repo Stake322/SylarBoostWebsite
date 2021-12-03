@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import Tabs from "./Tabs/TabsDesktop.js";
-import CardReviews from "./CardReview/CardReviewsDesktop.js";
 import { Container, Segment } from 'semantic-ui-react';
 import FadeAnimate from 'react-reveal/Fade';
 import TypeText from './Typetext/TypeText';

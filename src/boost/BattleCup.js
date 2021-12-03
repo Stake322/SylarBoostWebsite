@@ -157,12 +157,7 @@ const BattleCup = (props) => {
     };
 
 
-    let Font = "";
-    if (props.Mobile) {
-        Font = "150%"
-    } else {
-        Font = "100%"
-    }
+    let Font = props.Mobile ? "150%" : "100%"
     return (
         <div>
             {step === 1

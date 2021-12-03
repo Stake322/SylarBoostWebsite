@@ -1,7 +1,7 @@
 import React from 'react'
 import { Image, Rating, Container, Segment, Divider, Card, Header } from 'semantic-ui-react'
 
-const CardReviews = () => {
+const CardReviews = (props) => {
     const segmentStyle = { backgroundColor: "#F0DBD1" }
 
     const reviews = [{
@@ -42,7 +42,7 @@ const CardReviews = () => {
         <Container>
             <Segment style={segmentStyle} >
                 <Header textAlign="center" as="h2">Последние отзывы:</Header>
-                <Card.Group textAlign="center" itemsPerRow={5}>
+                <Card.Group stackable={props.Mobile} textAlign="center" itemsPerRow={5}>
                     {renderCards()}
                 </Card.Group>
             </Segment>

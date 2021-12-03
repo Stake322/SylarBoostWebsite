@@ -26,21 +26,14 @@ const MenuWithTabs = (props) => {
             menuItem: 'БАТЛ КАП',
         }
     ]
-    let font = "";
 
-    if (props.Mobile){
-         font = "120%"
-    } else {
-         font = "100%"
-    }
-    
     const menu = {
         pointing: true,
         secondary: true,
         borderless: false,
       
         style: {
-            fontSize: font,
+            fontSize: props.Mobile ? "120%" : "100%",
             backgroundColor: "rgb(81, 0, 204, 0.65)",
         }
     };

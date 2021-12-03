@@ -163,12 +163,7 @@ const Coach = (props) => {
         }, 500);
     }, [currentValue, count, result, hours, dispSegment, discount, promoSegment]);
 
-    let Font = "";
-    if (props.Mobile) {
-        Font = "150%"
-    } else {
-        Font = "100%"
-    }
+    let Font = props.Mobile ? "150%" : "100%"
     return (
 
         <div>

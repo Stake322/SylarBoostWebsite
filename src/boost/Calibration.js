@@ -206,13 +206,7 @@ const CalibrationCalc = (props) => {
             currentValue, count, infoParty, infoStream, infoHeros, cleanResult, promo, requstType
         })
     };
-
-    let Font = "";
-    if (props.Mobile) {
-        Font = "150%"
-    } else {
-        Font = "100%"
-    }
+    let Font = props.Mobile ? "150%" : "100%"
 
     return (
         <div>

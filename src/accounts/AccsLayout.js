@@ -2,8 +2,7 @@ import React from 'react'
 import { createMedia } from '@artsy/fresnel'
 import PropTypes from 'prop-types'
 
-import AccsDesktop from './AccsDesktop'
-import AccsMobile from "./AccsMobile.js"
+import Accs from './Accs'
 
 const { MediaContextProvider, Media } = createMedia({
     breakpoints: {
@@ -17,7 +16,7 @@ const { MediaContextProvider, Media } = createMedia({
 const DesktopContainer = (props) => {
     return (
         <Media greaterThan='mobile' >
-            <AccsDesktop />
+            <Accs />
         </Media>
     )
 }
@@ -27,9 +26,10 @@ DesktopContainer.propTypes = {
 }
 
 const MobileContainer = (props) => {
+    const Mobile = true;
     return (
         <Media at='mobile'>
-            <AccsMobile />
+            <Accs Mobile={Mobile} />
         </Media >
     )
 }
