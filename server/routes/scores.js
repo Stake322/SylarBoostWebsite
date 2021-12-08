@@ -8,7 +8,6 @@ const getScores = (req, res) => {
 }
 
 const newScore = (req, res) => {
-    console.log('Smb is trying to add a new score:', req.body);
     const newScore = req.body
     const filepath = './routes/scores.json'
 

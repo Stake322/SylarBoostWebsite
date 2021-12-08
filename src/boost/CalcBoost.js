@@ -141,7 +141,8 @@ const CalcBoost = (props) => {
     }, [props.config])
 
     useEffect(() => {
-        setDiscount(+props.config.price_modificators.promocode);
+        setDiscount(props.config.price_modificators.promocode);
+        console.log(discount);
         if (+currentValue + +flexValue <= 7500 && +currentValue > 0) {//пати стрим сервер и герои промокод
             throttle(() => {
                 const { result, cleanResult } = boostCalc.calculate('RUB', +currentValue, +currentValue + +flexValue, party, stream, "SERVER", heros, promo)
@@ -154,7 +155,7 @@ const CalcBoost = (props) => {
             }, 500);
 
         } else setNewValue("ВВЕДИТЕ РЕЙТИНГ");
-    }, [currentValue, flexValue, newValue, stream, party, heros, rank, inputResult, promoSegment, props.config]);
+    }, [currentValue, flexValue, newValue, stream, party, heros, rank, inputResult, promoSegment, props.config, props.config.price_modificators.promocode]);
 
     const nextStep1 = () => {
         if (cleanResult !== 0) {

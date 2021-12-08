@@ -59,7 +59,6 @@ const MainPudgeGame = () => {
     }
     useEffect(() => {
         api.getScores((result) => {
-            console.log('Will set new scores:', result.array);
             setScores(result.array)
         })
 

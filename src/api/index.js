@@ -40,9 +40,7 @@ export const sendNewScore = (nickname, score, callback) =>
         data: { nickname, score },
         url: url + "/new-score"
     }).then((res) => {
-        console.log("result from sendNewScore", res);
         callback(res)
     }).catch(err => {
-        console.log('err on sendNewScore:', err)
         callback(false, err)
     })
