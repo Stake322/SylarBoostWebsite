@@ -37,7 +37,7 @@ const newScore = (req, res) => {
                     isChanged = true
                     obj.array[replacementIndex] = newScore
                     sortOurArr()
-                    console.log('EBAT:', obj.array);
+                    console.log('SS:', obj.array);
                 }
             } else {
                 obj.array.push(req.body)
