@@ -25,7 +25,6 @@ export const sendRequest = (data, callback) =>
 export const getScores = (callback) =>
     axios.get(url + '/scores')
         .then(res => {
-            console.log('scores:', res);
             callback(res.data)
         })
         .catch(error => {
