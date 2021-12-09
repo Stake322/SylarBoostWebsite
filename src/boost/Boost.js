@@ -28,10 +28,10 @@ const Boost = () => {
 
     const handleStepChange = (currentStep) => setCurrentStep(currentStep)
     useEffect(() => {
-        api.config((gotConfig) => {
-            if (gotConfig)
-                setConfig(gotConfig);
-        })
+        // api.config((gotConfig) => {
+        //     if (gotConfig)
+        //         setConfig(gotConfig);
+        // })
     }, []);
 
     return (
