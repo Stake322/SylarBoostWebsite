@@ -101,11 +101,11 @@ const MobileContainer = (props) => {
     }
 
     const handleStepChange = (currentStep) => setCurrentStep(currentStep)
-    useEffect(() => {
-        api.config((gotConfig) => {
-            if (gotConfig)
-                setConfig(gotConfig);
-        })
+    // useEffect(() => {
+    //     api.config((gotConfig) => {
+    //         if (gotConfig)
+    //             setConfig(gotConfig);
+    //     })
     }, []);
 
     return (

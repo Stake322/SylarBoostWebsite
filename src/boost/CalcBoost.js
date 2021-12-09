@@ -142,7 +142,6 @@ const CalcBoost = (props) => {
 
     useEffect(() => {
         setDiscount(props.config.price_modificators.promocode);
-        console.log(discount);
         if (+currentValue + +flexValue <= 7500 && +currentValue > 0) {//пати стрим сервер и герои промокод
             throttle(() => {
                 const { result, cleanResult } = boostCalc.calculate('RUB', +currentValue, +currentValue + +flexValue, party, stream, "SERVER", heros, promo)
