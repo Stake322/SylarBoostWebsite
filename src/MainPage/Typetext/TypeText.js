@@ -29,8 +29,8 @@ const DesktopContainer = (props) => {
             <div style={someStyle} >
                 <TypedReactDemo
                     strings={[
-                        '-Это что Ana?  - Нет, это <strong>Mamau` dota<strong>',
-                        'Я В ДЖАКУЗИ Я В ДЖАКУЗИ ЭТО ФАКТ',
+                        `Сверху можно заказать услуги, <strong> ${nick}<strong>`,
+                        `Также поиграй в игру <strong> Пьюдж Варс<strong>`,
                         `Воспользуйся моими услугами, <strong> ${nick}<strong>`
                     ]}
                     font={`200%`}
