@@ -101,7 +101,7 @@ const MobileContainer = (props) => {
     }
 
     const handleStepChange = (currentStep) => setCurrentStep(currentStep)
-    // useEffect(() => {
+    useEffect(() => {
     //     api.config((gotConfig) => {
     //         if (gotConfig)
     //             setConfig(gotConfig);
