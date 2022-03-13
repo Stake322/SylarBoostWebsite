@@ -1,0 +1,19 @@
+.wrapper {
+    height: 100vh;
+}
+
+.bg_main {
+    background: url('../../img/mainpage/bg-main.jpg') center no-repeat;
+    background-size: cover;
+    height: 100vh;
+}
+
+.bg_berg {
+    background: url('../../img/mainpage/bg-png.png') center no-repeat;
+    background-size: cover;
+    height: 100vh;
+}
+
+.item {
+    width: 100%;
+}

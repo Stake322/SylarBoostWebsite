@@ -1,5 +1,4 @@
 import React from "react";
-import './App.css';
 import BottomBar from "./BottomBar.js";
 import TopBar from "./MainPage/Topbar/Topbar.js"
 import MainPage from './MainPage/MainPage.js'
